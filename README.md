@@ -78,7 +78,7 @@ Este proyecto reconstruye esas series comparando modelos estadísticos clásicos
 
 El procesamiento sigue la metodología **CRISP-ML(Q)** organizado en capas diferenciadas:
 
-![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML_Q__Pipeline.jpg)
+![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML(Q)_Pipeline.jpg)
 
 ### Capa `raw` — Descarga de datos crudos
 
@@ -125,11 +125,11 @@ Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Datase
 
 ### Ciclo de vida metodológico — CRISP-ML(Q)
 
-![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML_Q_.jpg)
+![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML(Q)_.jpg)
 
 ### Arquitectura de componentes
 
-![Arquitectura de Componentes](docs/img/CRIPS_ML_Q__Diagrama_arq_componentes.jpg)
+![Arquitectura de Componentes](docs/img/CRIPS_ML(Q)_Diagrama_arq_componentes.jpg)
 
 ### Diagrama UML de módulos
 
@@ -137,7 +137,7 @@ Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Datase
 
 ### Modelo de datos
 
-![Diagrama Entidad-Relación](docs/img/Diagrama_ER_drawio.png)
+![Diagrama Entidad-Relación](docs/img/Diagrama_ER.drawio.png)
 
 ---
 
