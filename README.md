@@ -1,6 +1,6 @@
 # Reconstrucción de Base de Datos Hidrometeorológica con IA
 
-Sistema para imputar valores faltantes en registros históricos de estaciones climatológicas de Sinaloa, a partir de datos oficiales del **SMN/CONAGUA**, mediante técnicas de Inteligencia Artificial. El proyecto construye un pipeline reproducible y trazable desde la descarga de datos crudos hasta la generación de una base reconstruida y validada.
+Sistema para imputar valores faltantes en registros históricos de estaciones climatológicas de Sinaloa, a partir de datos oficiales del **SMN/CONAGUA**, mediante técnicas de Inteligencia Artificial. El proyecto construye un pipeline reproducible y trazable desde la descarga de datos crudos hasta la generación de una base reconstruida y validada estadísticamente.
 
 > Proyecto de Residencias Profesionales — Laboratorio de Geomática y Teledetección  
 > Estado: **En desarrollo** | Sprint actual: 3
@@ -19,7 +19,7 @@ Este proyecto reconstruye esas series comparando modelos estadísticos clásicos
 
 | Módulo | Estado |
 |--------|--------|
-| Descarga de datos crudos (CONAGUA/SMN) | Listo |
+| Descarga de datos crudos (SMN/CONAGUA) | Listo |
 | Estructuración del dataset (raw → interim) | Listo |
 | Análisis exploratorio (EDA) | En desarrollo |
 | Preprocesamiento y feature engineering | Pendiente |
@@ -34,36 +34,40 @@ Este proyecto reconstruye esas series comparando modelos estadísticos clásicos
 ```
 .
 ├── Obtencion de Datos Crudos/
-│   ├── download_sinaloa_raw_pro.py     # Descarga automática desde SMN/CONAGUA
+│   ├── download_sinaloa_raw_pro.py
 │   └── README.md
 │
 ├── Estructuracion del Dataset/
 │   ├── organize_raw_by_station_year_variable_parquet.py
 │   └── README.md
 │
-├── data/                               # No versionado (.gitignore)
+├── data/                                        # No versionado
 │   ├── raw/
 │   │   └── conagua_smn/
 │   │       └── estado=sin/
 │   │           ├── fuente=normales_climatologicas/
-│   │           │   └── producto=diarios_txt/    # dia25001.txt, dia25002.txt ...
-│   │           ├── _logs/                       # Manifiestos y logs de descarga
-│   │           └── _meta/                       # stations_sin.csv
+│   │           │   └── producto=diarios_txt/    # dia25001.txt ... dia25192.txt
+│   │           ├── _logs/
+│   │           │   ├── download_manifest.csv
+│   │           │   └── download_run.log
+│   │           └── _meta/
+│   │               └── stations_sin.csv         # 192 estaciones con municipio y situación
 │   │
 │   └── interim/
 │       └── organized/
 │           └── estado=sin/
 │               ├── estacion=25001/
 │               │   ├── year=1961/
-│               │   │   ├── precip.csv / precip.parquet
+│               │   │   ├── precip.csv / precip.parquet   # columnas: date, value
 │               │   │   ├── evap.csv   / evap.parquet
 │               │   │   ├── tmax.csv   / tmax.parquet
 │               │   │   └── tmin.csv   / tmin.parquet
-│               │   └── ...
-│               └── _index.csv                   # Índice global con % de faltantes
+│               │   └── year=.../
+│               ├── estacion=.../
+│               └── _index.csv                   # índice global con % de faltantes
 │
 ├── docs/
-│   └── img/                            # Diagramas de arquitectura
+│   └── img/
 │
 └── README.md
 ```
@@ -72,28 +76,44 @@ Este proyecto reconstruye esas series comparando modelos estadísticos clásicos
 
 ## Pipeline de datos
 
-El proyecto organiza el procesamiento en capas diferenciadas siguiendo la metodología **CRISP-ML(Q)**:
+El procesamiento sigue la metodología **CRISP-ML(Q)** organizado en capas diferenciadas:
 
 ![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML_Q__Pipeline.jpg)
 
-### Capa raw — Descarga de datos crudos
+### Capa `raw` — Descarga de datos crudos
 
-El script `download_sinaloa_raw_pro.py` automatiza la descarga de archivos `.txt` diarios de estaciones climatológicas de Sinaloa desde el portal del SMN/CONAGUA. Genera un manifiesto de descarga y logs de ejecución para garantizar trazabilidad desde el primer paso.
+**Script:** `download_sinaloa_raw_pro.py`
+
+Descarga los archivos `.txt` diarios de **192 estaciones climatológicas de Sinaloa** desde el portal del SMN/CONAGUA. Por cada estación verifica si el archivo ya existe localmente y tiene contenido antes de volver a descargarlo. Genera trazabilidad completa del proceso en dos archivos:
+
+- `download_manifest.csv` — resultado por estación (`OK`, `SKIP_EXISTS`, `HTTP_404`, `URL_ERROR`, `ERROR`)
+- `download_run.log` — log con marca de tiempo de cada evento
 
 Fuente:
 ```
 https://smn.conagua.gob.mx/tools/RESOURCES/Normales_Climatologicas/Diarios/sin/dia{clave}.txt
 ```
 
-Consulta el [README de Obtencion de Datos Crudos](Obtencion%20de%20Datos%20Crudos/README.md) para instrucciones detalladas.
+Consulta el [README de Obtencion de Datos Crudos](Obtencion%20de%20Datos%20Crudos/README.md) para más detalles.
 
-### Capa interim — Estructuración del dataset
+### Capa `interim` — Estructuración del dataset
 
-El script `organize_raw_by_station_year_variable_parquet.py` transforma los archivos `.txt` crudos en un dataset estructurado jerárquicamente por estación, año y variable climática. Genera particiones en formato `.csv` y `.parquet`, y produce un índice global `_index.csv` con porcentaje de valores faltantes por archivo.
+**Script:** `organize_raw_by_station_year_variable_parquet.py`
 
-Variables procesadas: `PRECIP`, `EVAP`, `TMAX`, `TMIN`.
+Transforma los archivos `.txt` crudos en un dataset estructurado jerárquicamente por estación, año y variable climática. El script detecta automáticamente el inicio de la tabla de datos dentro de cada archivo, convierte los valores nulos (`NULO`, `Nulo`, `nulo`, cadena vacía) a `NaN`, y genera una partición independiente por cada combinación estación–año–variable.
 
-Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Dataset/README.md) para instrucciones detalladas.
+Variables procesadas:
+
+| Variable | Descripción |
+|----------|-------------|
+| `PRECIP` | Precipitación diaria (mm) |
+| `EVAP` | Evaporación diaria (mm) |
+| `TMAX` | Temperatura máxima diaria (°C) |
+| `TMIN` | Temperatura mínima diaria (°C) |
+
+Cada archivo de salida contiene únicamente dos columnas: `date` y `value`. Se genera además un `_index.csv` global con el porcentaje de valores faltantes por partición, útil para priorizar estaciones en el modelado.
+
+Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Dataset/README.md) para más detalles.
 
 ---
 
@@ -123,7 +143,7 @@ Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Datase
 
 ## Modelos a implementar
 
-Se compararán tres familias de modelos para determinar cuál preserva mejor la estructura estadística de las series:
+Se compararán tres familias de modelos para determinar cuál preserva mejor la estructura estadística y los patrones estacionales de las series:
 
 | Familia | Modelos |
 |---------|---------|
@@ -145,47 +165,61 @@ La selección del modelo final se determina mediante un **Quality Gate** que eva
 | KPSS | Verificación de estacionariedad |
 | ACF / PACF | Preservación de autocorrelación pre/post imputación |
 
-> Los resultados comparativos entre modelos se publicarán en esta sección al completar la fase de evaluación.
+> Los resultados comparativos entre modelos se publicarán aquí al completar la fase de evaluación.
 
 ---
 
 ## Instalación
 
-### Requisitos
-
-- Python 3.9 o superior
-
-### Pasos
+**Requisitos:** Python 3.9 o superior
 
 ```bash
-# Clonar el repositorio
 git clone https://github.com/Josegas/Residencias_Imputacion_Generativa_Hidrometeorologica.git
 cd Residencias_Imputacion_Generativa_Hidrometeorologica
 
-# Crear entorno virtual
 python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+source venv/bin/activate       # Windows: venv\Scripts\activate
 
-# Instalar dependencias
 pip install pandas pyarrow
 ```
 
-Los scripts de descarga no requieren dependencias externas, solo la biblioteca estándar de Python.
+El script de descarga no requiere dependencias externas, solo la biblioteca estándar de Python.
 
 ---
 
-## Uso rápido
+## Uso
 
-### 1. Descarga de datos crudos
+### 1. Configurar la ruta del proyecto
+
+Antes de ejecutar cualquier script, actualiza la variable `PROJECT_ROOT` en el archivo correspondiente con la ruta local de tu proyecto:
+
+```python
+# En download_sinaloa_raw_pro.py
+PROJECT_ROOT = r"ruta/a/tu/proyecto"
+
+# En organize_raw_by_station_year_variable_parquet.py
+PROJECT_ROOT = r"ruta/a/tu/proyecto"
+```
+
+### 2. Descargar los datos crudos
 
 ```bash
 cd "Obtencion de Datos Crudos"
 python download_sinaloa_raw_pro.py
 ```
 
-Descarga los archivos `.txt` de todas las estaciones de Sinaloa en `data/raw/`.
+Descarga los archivos `.txt` de las 192 estaciones de Sinaloa en `data/raw/`. Los archivos ya descargados se omiten automáticamente.
 
-### 2. Estructuración del dataset
+Salida esperada:
+```
+[2026-01-01 10:00:00] INICIO | Estado=sin | Total estaciones=192
+[2026-01-01 10:00:00] OK   25001 | Acatitan -> ...dia25001.txt
+[2026-01-01 10:00:01] SKIP 25002 | Agua Caliente (ya existe)
+...
+[2026-01-01 10:01:30] RESUMEN | OK=150 | SKIP=30 | FAIL=12
+```
+
+### 3. Estructurar el dataset
 
 ```bash
 cd "Estructuracion del Dataset"
@@ -194,7 +228,17 @@ python organize_raw_by_station_year_variable_parquet.py
 
 Transforma los archivos crudos en particiones organizadas por estación, año y variable en `data/interim/`.
 
-> Antes de ejecutar cualquier script, actualiza la variable `PROJECT_ROOT` dentro del archivo con la ruta local de tu proyecto.
+Salida esperada:
+```
+Encontrados 192 archivos crudos en: .../producto=diarios_txt
+
+[OK] Estación 25001: 23011 filas, años=63
+[OK] Estación 25014: 19850 filas, años=55
+[FAIL] dia25099.txt: No encontré encabezado de tabla 'FECHA'
+...
+Listo
+Índice generado en: .../estado=sin/_index.csv
+```
 
 ---
 
@@ -207,7 +251,7 @@ Transforma los archivos crudos en particiones organizadas por estación, año y 
 
 ## Documentación técnica
 
-El diseño completo del sistema está documentado en el Documento de Arquitectura de Software (DAS) v4.0, que incluye requerimientos, decisiones arquitectónicas, modelo de datos y metodología detallada.
+El diseño completo del sistema está documentado en el Documento de Arquitectura de Software (DAS) v4.0, que incluye requerimientos funcionales y no funcionales, decisiones arquitectónicas, modelo de datos relacional y metodología detallada bajo CRISP-ML(Q).
 
 ---
 
