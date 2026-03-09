@@ -118,24 +118,31 @@ Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Datase
 ---
 
 ## Arquitectura del sistema
+El sistema adopta un estilo de **pipeline de procesamiento de datos** con módulos secuenciales y acoplamiento bajo. Cada módulo expone una interfaz estandarizada (DataFrames) y consume únicamente la salida del módulo anterior, lo que facilita la validación por etapas, la sustitución de modelos y la trazabilidad del dato desde su origen hasta la base reconstruida.
 
 ### Vista conceptual
+Muestra los cuatro módulos principales del sistema y cómo interactúan el investigador y la fuente CONAGUA con el pipeline. El flujo va de izquierda a derecha: ingesta → procesamiento → reconstrucción con IA → salida, con retroalimentación hacia la capa de datos central.
 
 ![Arquitectura Conceptual](docs/img/Diagrama_arq_conceptual.jpg)
 
 ### Ciclo de vida metodológico — CRISP-ML(Q)
+Representa las siete fases del proyecto organizadas en torno al conjunto de datos hidrometeorológicos. Las flechas continuas indican el flujo principal y las discontinuas los ciclos de retroalimentación, que permiten regresar a fases anteriores cuando una evaluación no supera el Quality Gate.
+
 
 ![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML(Q).jpg)
 
 ### Arquitectura de componentes
+Vista detallada del pipeline completo con todas las etapas y herramientas asociadas. Muestra los tres grupos de modelos (estadísticos, ML y deep learning) que operan dentro del módulo de reconstrucción, y el flujo de retroalimentación desde el módulo de monitoreo hacia el reentrenamiento.
 
 ![Arquitectura de Componentes](docs/img/CRIPS_ML(Q)_Diagrama_arq_componentes.jpg)
 
 ### Diagrama UML de módulos
+Describe los ocho componentes de software del sistema y sus interfaces de intercambio: `IDataIngested`, `IDataCleaned`, `IDataPreprocessed`, `IReconstructedSeries` e `IValidatedResults`. El acoplamiento entre módulos se da exclusivamente a través de estas interfaces, lo que permite reemplazar cualquier componente sin afectar al resto del pipeline.
 
 ![Diagrama UML de Componentes](docs/img/Diagrama_UML_componentes.jpg)
 
 ### Modelo de datos
+Define la estructura relacional de la base reconstruida. La entidad central `EstacionClimatologica` se relaciona en 1:N con registros diarios, mensuales y anuales. Cada registro incluye los campos `fuente_dato`, `fecha_actualizacion` y `tipo_dato` para registrar si el valor es original o imputado, con qué modelo y en qué fecha, garantizando auditabilidad completa del proceso de reconstrucción.
 
 ![Diagrama Entidad-Relación](docs/img/Diagrama_ER.drawio.png)
 
