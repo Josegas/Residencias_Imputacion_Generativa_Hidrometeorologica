@@ -14,7 +14,7 @@ BASE_URL = (
     "{estado}/dia{clave}.txt"
 )
 
-# Cambia aquí si tu carpeta raíz cambia
+# Ruta de la carpeta Raiz
 PROJECT_ROOT = r"C:\Users\Jose Garcia\Documents\10_SEMESTRE_TEC\RESIDENCIAS\Reconstruccion_de_Base_de_Datos_Nuestro"
 
 RAW_ROOT = os.path.join(
@@ -314,3 +314,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
