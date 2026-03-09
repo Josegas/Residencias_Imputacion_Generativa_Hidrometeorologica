@@ -125,7 +125,7 @@ Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Datase
 
 ### Ciclo de vida metodológico — CRISP-ML(Q)
 
-![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML(Q)_.jpg)
+![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML(Q).jpg)
 
 ### Arquitectura de componentes
 
