@@ -117,7 +117,7 @@ $$NSE = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$$
 
 La base de datos relacional organiza la jerarquía climática con trazabilidad completa por registro.
 
-![Diagrama Entidad-Relación](docs/img/Diagrama_ER_drawio.png)
+![Diagrama Entidad-Relación](docs/img/Diagrama_ER.drawio.png)
 
 Cada registro incluye los campos de auditoría: `fuente_dato`, `fecha_actualizacion` y `tipo_dato` (original / imputado).
 
