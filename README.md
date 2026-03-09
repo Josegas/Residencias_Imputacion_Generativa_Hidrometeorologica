@@ -1,191 +1,221 @@
 # Reconstrucción de Base de Datos Hidrometeorológica con IA
 
-> Documento de Arquitectura de Software (DAS) — Laboratorio de Geomática y Teledetección  
-> Versión actual: **4.0** | Última actualización: *23 de febrero de 2026*
+Sistema para imputar valores faltantes en registros históricos de estaciones climatológicas de Sinaloa, a partir de datos oficiales del **SMN/CONAGUA**, mediante técnicas de Inteligencia Artificial. El proyecto construye un pipeline reproducible y trazable desde la descarga de datos crudos hasta la generación de una base reconstruida y validada.
+
+> Proyecto de Residencias Profesionales — Laboratorio de Geomática y Teledetección  
+> Estado: **En desarrollo** | Sprint actual: 3
 
 ---
 
-## Descripción del Proyecto
+## ¿Qué problema resuelve?
 
-Este proyecto desarrolla un sistema para **reconstruir bases de datos hidrometeorológicas históricas** a partir de datos oficiales de la [CONAGUA](https://smn.conagua.gob.mx/es/climatologia/informacion-climatologica/informacion-estadistica-climatologica), mediante técnicas de Inteligencia Artificial.
+Las bases de datos hidrometeorológicas históricas presentan valores faltantes, discontinuidades e inconsistencias causadas por fallas instrumentales, mantenimiento de estaciones o errores de transmisión. Esto compromete análisis hidrológicos, modelos climáticos y la detección de eventos extremos.
 
-Las bases de datos meteorológicas presentan frecuentemente valores faltantes, inconsistencias y discontinuidades temporales derivadas de fallas instrumentales, mantenimiento de estaciones o errores de transmisión. Este sistema imputa esos valores preservando las propiedades estadísticas y temporales de los datos.
-
----
-
-## Objetivos
-
-**General:** Reconstruir una base de datos hidrometeorológica imputando valores faltantes de forma consistente, preservando estructura estadística y temporal.
-
-**Específicos:**
-- Analizar la calidad y estructura estadística del conjunto de datos
-- Identificar distribución y patrones de valores faltantes
-- Implementar y comparar modelos clásicos y de aprendizaje profundo
-- Evaluar desempeño con métricas cuantitativas (RMSE, MAE, R²) e hidrológicas (NSE)
-- Desarrollar un pipeline reproducible bajo metodología CRISP-ML(Q)
-- Generar una base de datos reconstruida con metadatos de trazabilidad
+Este proyecto reconstruye esas series comparando modelos estadísticos clásicos contra técnicas de aprendizaje profundo especializadas en imputación de series temporales, garantizando trazabilidad completa de cada valor reconstruido.
 
 ---
 
-## Metodología: CRISP-ML(Q)
+## Estado del proyecto
 
-El proyecto sigue **CRISP-ML(Q)** *(Cross Industry Standard Process for Machine Learning with Quality Assurance)*, que extiende CRISP-DM con Quality Gates formales, gestión de riesgos y monitoreo continuo del modelo.
-
-![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML_Q_.jpg)
-
-| Fase | Descripción |
-|------|-------------|
-| 1. Comprensión del problema | Definición de métricas base y criterios de éxito |
-| 2. Comprensión de los datos | EDA, estacionariedad, patrones de faltantes |
-| 3. Preparación de los datos | Limpieza, normalización, feature engineering |
-| 4. Modelado | Entrenamiento y comparación de modelos |
-| 5. Evaluación / Quality Gate | Validación estadística e hidrológica |
-| 6. Despliegue | Generación de base reconstruida + metadatos |
-| 7. Monitoreo y mantenimiento | Detección de data drift, reentrenamiento |
+| Módulo | Estado |
+|--------|--------|
+| Descarga de datos crudos (CONAGUA/SMN) | Listo |
+| Estructuración del dataset (raw → interim) | Listo |
+| Análisis exploratorio (EDA) | En desarrollo |
+| Preprocesamiento y feature engineering | Pendiente |
+| Modelado e imputación | Pendiente |
+| Validación estadística / Quality Gate | Pendiente |
+| Exportación de base reconstruida | Pendiente |
 
 ---
 
-## Arquitectura del Sistema
+## Estructura del repositorio
 
-### Vista Conceptual
+```
+.
+├── Obtencion de Datos Crudos/
+│   ├── download_sinaloa_raw_pro.py     # Descarga automática desde SMN/CONAGUA
+│   └── README.md
+│
+├── Estructuracion del Dataset/
+│   ├── organize_raw_by_station_year_variable_parquet.py
+│   └── README.md
+│
+├── data/                               # No versionado (.gitignore)
+│   ├── raw/
+│   │   └── conagua_smn/
+│   │       └── estado=sin/
+│   │           ├── fuente=normales_climatologicas/
+│   │           │   └── producto=diarios_txt/    # dia25001.txt, dia25002.txt ...
+│   │           ├── _logs/                       # Manifiestos y logs de descarga
+│   │           └── _meta/                       # stations_sin.csv
+│   │
+│   └── interim/
+│       └── organized/
+│           └── estado=sin/
+│               ├── estacion=25001/
+│               │   ├── year=1961/
+│               │   │   ├── precip.csv / precip.parquet
+│               │   │   ├── evap.csv   / evap.parquet
+│               │   │   ├── tmax.csv   / tmax.parquet
+│               │   │   └── tmin.csv   / tmin.parquet
+│               │   └── ...
+│               └── _index.csv                   # Índice global con % de faltantes
+│
+├── docs/
+│   └── img/                            # Diagramas de arquitectura
+│
+└── README.md
+```
 
-El sistema organiza el flujo de datos en cuatro módulos principales: ingesta, procesamiento, reconstrucción con IA y salida.
+---
+
+## Pipeline de datos
+
+El proyecto organiza el procesamiento en capas diferenciadas siguiendo la metodología **CRISP-ML(Q)**:
+
+![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML_Q__Pipeline.jpg)
+
+### Capa raw — Descarga de datos crudos
+
+El script `download_sinaloa_raw_pro.py` automatiza la descarga de archivos `.txt` diarios de estaciones climatológicas de Sinaloa desde el portal del SMN/CONAGUA. Genera un manifiesto de descarga y logs de ejecución para garantizar trazabilidad desde el primer paso.
+
+Fuente:
+```
+https://smn.conagua.gob.mx/tools/RESOURCES/Normales_Climatologicas/Diarios/sin/dia{clave}.txt
+```
+
+Consulta el [README de Obtencion de Datos Crudos](Obtencion%20de%20Datos%20Crudos/README.md) para instrucciones detalladas.
+
+### Capa interim — Estructuración del dataset
+
+El script `organize_raw_by_station_year_variable_parquet.py` transforma los archivos `.txt` crudos en un dataset estructurado jerárquicamente por estación, año y variable climática. Genera particiones en formato `.csv` y `.parquet`, y produce un índice global `_index.csv` con porcentaje de valores faltantes por archivo.
+
+Variables procesadas: `PRECIP`, `EVAP`, `TMAX`, `TMIN`.
+
+Consulta el [README de Estructuracion del Dataset](Estructuracion%20del%20Dataset/README.md) para instrucciones detalladas.
+
+---
+
+## Arquitectura del sistema
+
+### Vista conceptual
 
 ![Arquitectura Conceptual](docs/img/Diagrama_arq_conceptual.jpg)
 
-### Pipeline CRISP-ML(Q) — Vista de Componentes
+### Ciclo de vida metodológico — CRISP-ML(Q)
 
-Vista completa del pipeline con todas las etapas, herramientas y flujos de retroalimentación.
+![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML_Q_.jpg)
 
-![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML(Q)_Pipeline.jpg)
+### Arquitectura de componentes
 
-### Arquitectura de Componentes detallada
+![Arquitectura de Componentes](docs/img/CRIPS_ML_Q__Diagrama_arq_componentes.jpg)
 
-![Arquitectura de Componentes](docs/img/CRIPS_ML(Q)_Diagrama_arq_componentes.jpg)
-
-### Diagrama UML de Componentes
-
-Los módulos se comunican mediante interfaces de datos estandarizadas (DataFrames), garantizando acoplamiento bajo y trazabilidad completa del dato.
+### Diagrama UML de módulos
 
 ![Diagrama UML de Componentes](docs/img/Diagrama_UML_componentes.jpg)
 
----
+### Modelo de datos
 
-## Modelos Implementados
-
-### Baselines Estadísticos
-| Modelo | Uso |
-|--------|-----|
-| SARIMA | Series con estacionalidad anual |
-| TBATS  | Patrones estacionales complejos |
-| Prophet | Tendencia + estacionalidad flexible |
-
-### Machine Learning
-| Modelo | Uso |
-|--------|-----|
-| XGBoost | Baseline no lineal con feature engineering |
-| KNN | Imputación por vecinos cercanos |
-
-### Deep Learning — Imputación Especializada
-| Modelo | Descripción |
-|--------|-------------|
-| LSTM | Dependencias temporales de largo plazo |
-| BRITS | Imputación recurrente bidireccional sin supuestos rígidos |
-| GAN | Preservación de distribución conjunta multivariante |
-| SAITS | Auto-atención para patrones temporales complejos |
-| CSDI | Difusión condicional probabilística para alta tasa de faltantes |
+![Diagrama Entidad-Relación](docs/img/Diagrama_ER_drawio.png)
 
 ---
 
-## Métricas de Evaluación
+## Modelos a implementar
 
-$$RMSE = \sqrt{\frac{1}{n}\sum(y_i - \hat{y}_i)^2} \qquad MAE = \frac{1}{n}\sum|y_i - \hat{y}_i|$$
+Se compararán tres familias de modelos para determinar cuál preserva mejor la estructura estadística de las series:
 
-$$NSE = 1 - \frac{\sum(y_i - \hat{y}_i)^2}{\sum(y_i - \bar{y})^2}$$
+| Familia | Modelos |
+|---------|---------|
+| Estadísticos (baseline) | SARIMA, TBATS, Prophet |
+| Machine Learning | XGBoost |
+| Deep Learning | LSTM, Autoencoders, BRITS, GAN, SAITS, CSDI |
+
+La selección del modelo final se determina mediante un **Quality Gate** que evalúa no solo el error numérico, sino la preservación de estacionalidad, autocorrelación y eventos extremos hidrológicos.
+
+---
+
+## Métricas de evaluación
 
 | Métrica | Propósito |
 |---------|-----------|
 | RMSE / MAE / MAPE | Error de imputación general |
-| R² | Ajuste global del modelo |
-| NSE (Nash–Sutcliffe) | Eficiencia predictiva hidrológica |
-| Prueba KPSS | Verificación de estacionariedad |
+| R² | Ajuste global |
+| NSE (Nash-Sutcliffe) | Eficiencia predictiva hidrológica |
+| KPSS | Verificación de estacionariedad |
 | ACF / PACF | Preservación de autocorrelación pre/post imputación |
 
----
-
-## Modelo de Datos
-
-La base de datos relacional organiza la jerarquía climática con trazabilidad completa por registro.
-
-![Diagrama Entidad-Relación](docs/img/Diagrama_ER.drawio.png)
-
-Cada registro incluye los campos de auditoría: `fuente_dato`, `fecha_actualizacion` y `tipo_dato` (original / imputado).
+> Los resultados comparativos entre modelos se publicarán en esta sección al completar la fase de evaluación.
 
 ---
 
-## Stack Tecnológico
+## Instalación
 
-| Categoría | Herramientas |
-|-----------|-------------|
-| Lenguaje | Python 3.x |
-| Manipulación de datos | pandas, NumPy |
-| ML clásico | scikit-learn, XGBoost |
-| Deep Learning | TensorFlow / PyTorch |
-| Series de tiempo | statsmodels, Prophet |
-| Almacenamiento | PostgreSQL / CSV / Parquet |
-| Tracking de experimentos | MLflow |
-| Entorno de ejecución | Local — Laboratorio de Geomática y Teledetección |
+### Requisitos
 
----
+- Python 3.9 o superior
 
-## Requerimientos Funcionales Clave
+### Pasos
 
-| ID | Requerimiento |
-|----|--------------|
-| RF-01 | Carga de datos CONAGUA (CSV/Excel) con validación de esquema |
-| RF-02 | Organización por estación, variable y periodo temporal |
-| RF-03 | Identificación y bandereo de valores faltantes |
-| RF-04 | Preprocesamiento: limpieza, normalización, lags, features estacionales |
-| RF-05 | Imputación con modelos IA comparables |
-| RF-06 | Validación estadística con métricas e hidrológicas |
-| RF-07 | Exportación con metadatos de qué valores fueron imputados y con qué modelo |
-| RF-08 | Reproducibilidad completa del pipeline |
+```bash
+# Clonar el repositorio
+git clone https://github.com/Josegas/Residencias_Imputacion_Generativa_Hidrometeorologica.git
+cd Residencias_Imputacion_Generativa_Hidrometeorologica
+
+# Crear entorno virtual
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
+
+# Instalar dependencias
+pip install pandas pyarrow
+```
+
+Los scripts de descarga no requieren dependencias externas, solo la biblioteca estándar de Python.
 
 ---
 
-## Datasets
+## Uso rápido
 
-- **Sinaloa (Mendeley Data):** https://data.mendeley.com/datasets/gb8jp62vm5/4
-- **CONAGUA / SMN:** https://smn.conagua.gob.mx/es/climatologia/informacion-climatologica/informacion-estadistica-climatologica
+### 1. Descarga de datos crudos
+
+```bash
+cd "Obtencion de Datos Crudos"
+python download_sinaloa_raw_pro.py
+```
+
+Descarga los archivos `.txt` de todas las estaciones de Sinaloa en `data/raw/`.
+
+### 2. Estructuración del dataset
+
+```bash
+cd "Estructuracion del Dataset"
+python organize_raw_by_station_year_variable_parquet.py
+```
+
+Transforma los archivos crudos en particiones organizadas por estación, año y variable en `data/interim/`.
+
+> Antes de ejecutar cualquier script, actualiza la variable `PROJECT_ROOT` dentro del archivo con la ruta local de tu proyecto.
 
 ---
 
-## Referencias y Proyectos Relacionados
+## Fuentes de datos
 
-- [Notebook_Prediclima](https://github.com/Zastha/Notebook_Prediclima?tab=readme-ov-file)
-- [Datos Meteorológicos — ZurielMF](https://github.com/ZurielMF/86-Y-Metereological_data)
+- [Sinaloa — Mendeley Data](https://data.mendeley.com/datasets/gb8jp62vm5/4)
+- [CONAGUA / SMN — Información estadística climatológica](https://smn.conagua.gob.mx/es/climatologia/informacion-climatologica/informacion-estadistica-climatologica)
+
+---
+
+## Documentación técnica
+
+El diseño completo del sistema está documentado en el Documento de Arquitectura de Software (DAS) v4.0, que incluye requerimientos, decisiones arquitectónicas, modelo de datos y metodología detallada.
 
 ---
 
 ## Autores
 
-| Nombre | Rol |
-|--------|-----|
-| Sebastián Verdugo Bermúdez | Autor principal, arquitectura |
-| José Ángel García Pérez | Co-autor, revisión |
+| Nombre | GitHub |
+|--------|--------|
+| José Ángel García Pérez | [@Josegas](https://github.com/Josegas) |
+| Sebastián Verdugo Bermúdez | [@Sebastian1247](https://github.com/Sebastian1247) |
 
 **Laboratorio de Geomática y Teledetección**
-
----
-
-## Criterios de Éxito
-
-- Las imputaciones preservan la distribución estadística original
-- Mejora cuantificable frente a métodos tradicionales (RMSE, NSE)
-- Pipeline totalmente reproducible
-- Carga, imputación y exportación sin errores
-- Validación estadística formal documentada
-
----
-
-*Versión del DAS: 4.0 — Sprint 3*
