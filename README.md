@@ -57,11 +57,11 @@ El sistema organiza el flujo de datos en cuatro módulos principales: ingesta, p
 
 Vista completa del pipeline con todas las etapas, herramientas y flujos de retroalimentación.
 
-![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML_Q__Pipeline.jpg)
+![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML(Q)_Pipeline.jpg)
 
 ### Arquitectura de Componentes detallada
 
-![Arquitectura de Componentes](docs/img/CRIPS_ML_Q__Diagrama_arq_componentes.jpg)
+![Arquitectura de Componentes](docs/img/CRIPS_ML(Q)_Diagrama_arq_componentes.jpg)
 
 ### Diagrama UML de Componentes
 
