@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 
 # =========================
-# CONFIG (ajusta tu ruta raíz)
+# CONFIG (aqui va la ruta raíz)
 # =========================
 PROJECT_ROOT = r"C:\Users\Jose Garcia\Documents\10_SEMESTRE_TEC\RESIDENCIAS\Reconstruccion_de_Base_de_Datos_Nuestro"
 
@@ -21,7 +21,7 @@ RAW_DIR = (
 OUT_DIR = Path(PROJECT_ROOT) / "data" / "interim" / "organized" / "estado=sin"
 INDEX_PATH = OUT_DIR / "_index.csv"
 
-# Variables esperadas por tu encabezado
+# Variables esperadas por el encabezado
 EXPECTED_VARS = ["PRECIP", "EVAP", "TMAX", "TMIN"]
 
 
@@ -190,3 +190,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
