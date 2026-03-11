@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 
 # =========================
-# CONFIG (aqui va la ruta raíz)
+# CONFIG (Ruta a ajustar al entorno)
 # =========================
 PROJECT_ROOT = r"C:\Users\Jose Garcia\Documents\10_SEMESTRE_TEC\RESIDENCIAS\Reconstruccion_de_Base_de_Datos_Nuestro"
 
@@ -21,7 +21,7 @@ RAW_DIR = (
 OUT_DIR = Path(PROJECT_ROOT) / "data" / "interim" / "organized" / "estado=sin"
 INDEX_PATH = OUT_DIR / "_index.csv"
 
-# Variables esperadas por el encabezado
+# Variables esperadas por tu encabezado
 EXPECTED_VARS = ["PRECIP", "EVAP", "TMAX", "TMIN"]
 
 
@@ -45,12 +45,12 @@ def find_table_start_line(txt_path: Path) -> int:
 def parse_station_txt(txt_path: Path) -> pd.DataFrame:
     """
     Lee el TXT del SMN/CONAGUA:
-    - salta encabezado largo
-    - lee tabla (tabulada)
+    - salta encabezado largo + línea FECHA + línea de unidades
+    - asigna nombres de columnas manualmente
     - convierte NULO a NaN
-    - FECHA -> datetime
+    - date -> datetime
     - variables -> numérico
-    Devuelve DF con columnas: date, PRECIP, EVAP, TMAX, TMIN (las que existan)
+    Devuelve DF con columnas: date, PRECIP, EVAP, TMAX, TMIN
     """
     start = find_table_start_line(txt_path)
 
@@ -58,35 +58,23 @@ def parse_station_txt(txt_path: Path) -> pd.DataFrame:
         txt_path,
         sep="\t",
         engine="python",
-        skiprows=start,  # empieza en FECHA
-        header=0,
+        skiprows=start + 2,   # salta línea FECHA y línea de unidades (mm)(°C)
+        header=None,          # sin encabezado automático
+        names=["date", "PRECIP", "EVAP", "TMAX", "TMIN"],  # nombres manuales
         na_values=["NULO", "Nulo", "nulo", ""],
     )
 
-    # Elimina columnas "Unnamed" causadas por tabs extra
-    df = df.loc[:, ~df.columns.astype(str).str.contains("^Unnamed")]
-
-    # Normaliza nombres
-    df.columns = [str(c).strip() for c in df.columns]
-
-    if "FECHA" not in df.columns:
-        raise ValueError(
-            f"Columnas encontradas: {df.columns.tolist()} (no aparece FECHA)")
-
-    # Quita filas que no sean fecha válida (a veces se cuela la línea de unidades)
-    df = df[df["FECHA"].astype(str).str.match(
+    # Quita filas que no sean fecha válida
+    df = df[df["date"].astype(str).str.match(
         r"^\d{4}-\d{2}-\d{2}$", na=False)].copy()
 
-    df["date"] = pd.to_datetime(
-        df["FECHA"], format="%Y-%m-%d", errors="coerce")
+    df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d", errors="coerce")
 
     for col in EXPECTED_VARS:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    keep = ["date"] + [c for c in EXPECTED_VARS if c in df.columns]
-    df = df[keep].dropna(subset=["date"]).sort_values(
-        "date").reset_index(drop=True)
+    df = df.dropna(subset=["date"]).sort_values("date").reset_index(drop=True)
 
     return df
 
@@ -105,7 +93,7 @@ def init_index():
 
 def check_parquet_engine():
     try:
-        import pyarrow  # noqa: F401
+        import pyarrow
         return True
     except Exception:
         return False
@@ -190,4 +178,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
