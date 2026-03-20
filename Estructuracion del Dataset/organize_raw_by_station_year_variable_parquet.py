@@ -1,15 +1,15 @@
-import os
 import csv
 import pandas as pd
 from pathlib import Path
 
 # =========================
-# CONFIG (Ruta a ajustar al entorno)
+# CONFIG
 # =========================
-PROJECT_ROOT = r"C:\Users\Jose Garcia\Documents\10_SEMESTRE_TEC\RESIDENCIAS\Reconstruccion_de_Base_de_Datos_Nuestro"
+# Si el script está en /scripts/, usa .parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 RAW_DIR = (
-    Path(PROJECT_ROOT)
+    PROJECT_ROOT
     / "data"
     / "raw"
     / "conagua_smn"
@@ -18,10 +18,10 @@ RAW_DIR = (
     / "producto=diarios_txt"
 )
 
-OUT_DIR = Path(PROJECT_ROOT) / "data" / "interim" / "organized" / "estado=sin"
+OUT_DIR = PROJECT_ROOT / "data" / "interim" / "organized" / "estado=sin"
 INDEX_PATH = OUT_DIR / "_index.csv"
 
-# Variables esperadas por tu encabezado
+# Variables esperadas por el encabezado
 EXPECTED_VARS = ["PRECIP", "EVAP", "TMAX", "TMIN"]
 
 
@@ -34,12 +34,11 @@ def station_id_from_filename(name: str) -> str:
 
 def find_table_start_line(txt_path: Path) -> int:
     """Encuentra la línea (0-index) donde empieza la tabla: la línea que inicia con FECHA."""
-    with open(txt_path, "r", encoding="utf-8", errors="ignore") as f:
+    with txt_path.open("r", encoding="utf-8", errors="ignore") as f:
         for i, line in enumerate(f):
             if line.strip().startswith("FECHA"):
                 return i
-    raise ValueError(
-        f"No encontré encabezado de tabla 'FECHA' en {txt_path.name}")
+    raise ValueError(f"No encontré encabezado de tabla 'FECHA' en {txt_path.name}")
 
 
 def parse_station_txt(txt_path: Path) -> pd.DataFrame:
@@ -58,16 +57,13 @@ def parse_station_txt(txt_path: Path) -> pd.DataFrame:
         txt_path,
         sep="\t",
         engine="python",
-        skiprows=start + 2,   # salta línea FECHA y línea de unidades (mm)(°C)
-        header=None,          # sin encabezado automático
-        names=["date", "PRECIP", "EVAP", "TMAX", "TMIN"],  # nombres manuales
+        skiprows=start + 2,
+        header=None,
+        names=["date", "PRECIP", "EVAP", "TMAX", "TMIN"],
         na_values=["NULO", "Nulo", "nulo", ""],
     )
 
-    # Quita filas que no sean fecha válida
-    df = df[df["date"].astype(str).str.match(
-        r"^\d{4}-\d{2}-\d{2}$", na=False)].copy()
-
+    df = df[df["date"].astype(str).str.match(r"^\d{4}-\d{2}-\d{2}$", na=False)].copy()
     df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d", errors="coerce")
 
     for col in EXPECTED_VARS:
@@ -75,7 +71,6 @@ def parse_station_txt(txt_path: Path) -> pd.DataFrame:
             df[col] = pd.to_numeric(df[col], errors="coerce")
 
     df = df.dropna(subset=["date"]).sort_values("date").reset_index(drop=True)
-
     return df
 
 
@@ -85,22 +80,21 @@ def ensure_out_dirs():
 
 def init_index():
     if not INDEX_PATH.exists():
-        with open(INDEX_PATH, "w", newline="", encoding="utf-8") as f:
+        with INDEX_PATH.open("w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["station", "year", "variable",
-                       "path_parquet", "path_csv", "rows", "missing_pct"])
+            w.writerow(["station", "year", "variable", "path_parquet", "path_csv", "rows", "missing_pct"])
 
 
 def check_parquet_engine():
     try:
-        import pyarrow
+        import pyarrow  # noqa: F401
         return True
     except Exception:
         return False
 
 
 def append_index(rows):
-    with open(INDEX_PATH, "a", newline="", encoding="utf-8") as f:
+    with INDEX_PATH.open("a", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         for r in rows:
             w.writerow(r)
@@ -109,6 +103,10 @@ def append_index(rows):
 def main():
     ensure_out_dirs()
     init_index()
+
+    print(f"PROJECT_ROOT: {PROJECT_ROOT}")
+    print(f"RAW_DIR: {RAW_DIR}")
+    print(f"OUT_DIR: {OUT_DIR}")
 
     has_pyarrow = check_parquet_engine()
     if not has_pyarrow:
@@ -146,14 +144,11 @@ def main():
             year_dir.mkdir(parents=True, exist_ok=True)
 
             for var in variables:
-                out_df = df_y[["date", var]].rename(
-                    columns={var: "value"}).reset_index(drop=True)
+                out_df = df_y[["date", var]].rename(columns={var: "value"}).reset_index(drop=True)
 
-                # paths
                 out_csv = year_dir / f"{var.lower()}.csv"
                 out_parquet = year_dir / f"{var.lower()}.parquet"
 
-                # Guardado
                 out_df.to_csv(out_csv, index=False)
                 out_df.to_parquet(out_parquet, index=False)
 
@@ -168,11 +163,10 @@ def main():
                     round(missing_pct, 3)
                 ])
 
-        print(
-            f"[OK] Estación {station_id}: {len(df)} filas, años={df['year'].nunique()}")
+        print(f"[OK] Estación {station_id}: {len(df)} filas, años={df['year'].nunique()}")
 
     append_index(index_rows)
-    print(f"\nListo \nÍndice generado en:\n{INDEX_PATH}")
+    print(f"\nListo\nÍndice generado en:\n{INDEX_PATH}")
     print(f"Salida organizada en:\n{OUT_DIR}")
 
 
