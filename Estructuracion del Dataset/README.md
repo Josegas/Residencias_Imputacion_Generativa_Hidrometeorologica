@@ -14,7 +14,7 @@ Además, genera un índice global con metadatos de salida que facilita la trazab
 
 ## Objetivo
 
-El objetivo de este script es construir una versión organizada del dataset hidrometeorológico a partir de los archivos crudos descargados previamente desde CONAGUA/SMN, preservando la trazabilidad del dato original y facilitando el acceso eficiente por particiones temporales y variables.
+Construir una versión organizada del dataset hidrometeorológico a partir de los archivos crudos descargados previamente desde CONAGUA/SMN, preservando la trazabilidad del dato original y facilitando el acceso eficiente por particiones temporales y variables.
 
 Este paso forma parte de la fase de preparación de datos del proyecto de reconstrucción de una base de datos hidrometeorológica usando técnicas de inteligencia artificial. La estructura resultante permite trabajar posteriormente con pipelines de imputación, validación estadística y modelado reproducible.
 
@@ -22,15 +22,13 @@ Este paso forma parte de la fase de preparación de datos del proyecto de recons
 
 ## Qué hace el script
 
-El script realiza automáticamente las siguientes tareas:
-
+- Resuelve la ruta raíz del proyecto automáticamente a partir de su propia ubicación (`Path(__file__).resolve().parent.parent`), sin necesidad de configurar rutas manualmente.
 - Lee todos los archivos `.txt` crudos almacenados en la carpeta `raw`.
-- Detecta la línea donde comienza la tabla de datos dentro de cada archivo.
-- Extrae únicamente la tabla climatológica útil.
-- Convierte los valores `"NULO"` a valores nulos estándar (`NaN`).
-- Convierte la columna `FECHA` a tipo fecha.
-- Convierte a tipo numérico las variables climáticas esperadas.
-- Filtra únicamente registros con fecha válida.
+- Detecta la línea donde comienza la tabla de datos dentro de cada archivo (encabezado `FECHA`).
+- Salta la línea de encabezado y la línea de unidades, y asigna los nombres de columnas directamente: `date`, `PRECIP`, `EVAP`, `TMAX`, `TMIN`.
+- Convierte los valores `"NULO"`, `"Nulo"`, `"nulo"` y cadena vacía a valores nulos estándar (`NaN`).
+- Filtra únicamente registros con fecha válida en formato `YYYY-MM-DD`.
+- Convierte la columna `date` a tipo `datetime` y las variables climáticas a tipo numérico.
 - Ordena cronológicamente los datos.
 - Separa los registros por año calendario.
 - Divide cada año por variable climática.
@@ -41,8 +39,6 @@ El script realiza automáticamente las siguientes tareas:
 
 ## Variables procesadas
 
-El script considera las siguientes variables climáticas como variables esperadas:
-
 | Variable | Descripción |
 |----------|-------------|
 | `PRECIP` | Precipitación diaria |
@@ -50,18 +46,16 @@ El script considera las siguientes variables climáticas como variables esperada
 | `TMAX`   | Temperatura máxima diaria |
 | `TMIN`   | Temperatura mínima diaria |
 
-Para cada variable, se genera un archivo independiente con dos columnas:
+Para cada variable se genera un archivo independiente con dos columnas:
 
 - `date` → fecha en formato `YYYY-MM-DD`
 - `value` → valor observado de la variable
-
-Los valores faltantes originalmente etiquetados como `"NULO"` se convierten a `NaN`, manteniendo consistencia con el esquema del dataset organizado definido en el proyecto.
 
 ---
 
 ## Estructura de entrada
 
-El script espera encontrar los archivos crudos en la siguiente ruta:
+El script espera encontrar los archivos crudos en:
 
 ```text
 data/raw/conagua_smn/estado=sin/fuente=normales_climatologicas/producto=diarios_txt/
@@ -76,19 +70,17 @@ dia25014.txt
 ...
 ```
 
-Estos archivos corresponden a registros diarios históricos por estación climatológica.
+El nombre de archivo puede tener el formato `dia<clave>.txt` o `<clave>.txt`. Ambos son soportados.
 
 ---
 
 ## Estructura de salida
 
-Los datos organizados se guardan en la siguiente ruta:
+Los datos organizados se guardan en:
 
 ```text
 data/interim/organized/estado=sin/
 ```
-
-La estructura final generada es:
 
 ```text
 data/
@@ -106,176 +98,101 @@ data/
         └── estado=sin/
             ├── estacion=25001/
             │   ├── year=1961/
-            │   │   ├── precip.csv
-            │   │   ├── precip.parquet
-            │   │   ├── evap.csv
-            │   │   ├── evap.parquet
-            │   │   ├── tmax.csv
-            │   │   ├── tmax.parquet
-            │   │   ├── tmin.csv
-            │   │   └── tmin.parquet
+            │   │   ├── precip.csv / precip.parquet
+            │   │   ├── evap.csv   / evap.parquet
+            │   │   ├── tmax.csv   / tmax.parquet
+            │   │   └── tmin.csv   / tmin.parquet
             │   ├── year=1962/
             │   └── ...
-            │
             ├── estacion=25002/
             │   └── ...
-            │
             └── _index.csv
 ```
 
-Esta organización jerárquica fue definida precisamente para facilitar trazabilidad, acceso por estación, análisis temporal anual y procesamiento modular por variable.
-
 ---
 
-## Estructuración del Dataset
+## Estructura del dataset
 
 ### Organización jerárquica
 
-La estructura del dataset responde a tres niveles principales:
+**Nivel 1 — Estación:** cada estación se almacena en un directorio independiente con el formato `estacion=25001/`, usando la clave oficial de CONAGUA para mantener trazabilidad con la fuente.
 
-#### Nivel 1: Estación
+**Nivel 2 — Año:** dentro de cada estación los datos se organizan por año calendario (`year=1961/`, `year=1962/`, ...), lo que permite acceso eficiente a períodos específicos y reduce la carga en memoria al procesar subconjuntos anuales.
 
-Cada estación meteorológica se almacena en un directorio independiente con el formato:
-
-```text
-estacion=25001/
-```
-
-Donde `25001` corresponde a la clave oficial de estación definida por CONAGUA. Se conserva el identificador original de la fuente para mantener consistencia y trazabilidad.
-
-#### Nivel 2: Año
-
-Dentro de cada estación, los datos se organizan por año calendario:
-
-```text
-year=1961/
-year=1962/
-...
-```
-
-Esto permite:
-
-- acceso eficiente a periodos específicos
-- segmentación temporal para entrenamiento, validación y prueba
-- reducción de carga en memoria al procesar subconjuntos anuales
-
-#### Nivel 3: Variable climática
-
-Dentro de cada carpeta anual, los datos se almacenan por variable:
-
-```text
-precip.csv / precip.parquet
-evap.csv   / evap.parquet
-tmax.csv   / tmax.parquet
-tmin.csv   / tmin.parquet
-```
-
-Cada archivo contiene solamente las columnas `date` y `value`. Esta forma de organización fue elegida para facilitar el procesamiento posterior dentro del pipeline del proyecto.
-
----
+**Nivel 3 — Variable climática:** dentro de cada carpeta anual se almacena un archivo por variable (`precip`, `evap`, `tmax`, `tmin`), cada uno con únicamente las columnas `date` y `value`.
 
 ### Convenciones de nomenclatura
 
-Se utilizan convenciones tipo `key=value` en nombres de carpetas, por ejemplo:
-
-```text
-estado=sin
-estacion=25001
-year=1961
-```
-
-Estas convenciones permiten:
-
-- escalabilidad futura
-- claridad semántica
-- compatibilidad con pipelines y sistemas de particionado de datos
-- integración sencilla con flujos de procesamiento tipo data engineering
-
-Los archivos de salida siguen la convención `<variable>.csv` / `<variable>.parquet`, siempre en minúsculas:
-
-```text
-precip.csv
-tmax.parquet
-```
-
----
+Las carpetas usan la convención `key=value` (`estado=sin`, `estacion=25001`, `year=1961`), que facilita la escalabilidad, claridad semántica y compatibilidad con pipelines de data engineering. Los archivos de salida siempre están en minúsculas (`precip.csv`, `tmax.parquet`).
 
 ### Formatos de almacenamiento
 
-El script guarda cada variable en dos formatos complementarios:
+Cada partición se guarda en dos formatos complementarios:
 
-**CSV**
-- Alta compatibilidad
-- Fácil inspección manual
-- Útil para revisión rápida
-- Interoperabilidad con múltiples herramientas
-
-**Parquet**
-- Formato columnar optimizado
-- Menor tamaño en disco
-- Mejor rendimiento de lectura y escritura
-- Preservación de tipos de datos
-- Recomendable para procesamiento analítico y modelado
-
-La coexistencia de ambos formatos permite tener tanto un formato accesible para inspección como uno optimizado para pipelines de ciencia de datos.
+- **CSV:** alta compatibilidad, fácil inspección manual, interoperabilidad con múltiples herramientas.
+- **Parquet:** formato columnar optimizado, menor tamaño en disco, mejor rendimiento de lectura y preservación de tipos. Recomendado para procesamiento analítico y modelado.
 
 ---
 
-### Archivo de índice global
+## Índice global
 
-El script genera un archivo global llamado `_index.csv`, ubicado en:
+El script genera `_index.csv` en:
 
 ```text
 data/interim/organized/estado=sin/_index.csv
 ```
 
-Este archivo contiene las siguientes columnas:
-
 | Columna | Descripción |
 |---------|-------------|
 | `station` | Clave de estación |
 | `year` | Año del registro |
-| `variable` | Variable climática |
-| `path_parquet` | Ruta al archivo Parquet |
-| `path_csv` | Ruta al archivo CSV |
-| `rows` | Número de filas |
-| `missing_pct` | Porcentaje de valores faltantes |
+| `variable` | Variable climática (en minúsculas) |
+| `path_parquet` | Ruta absoluta al archivo Parquet |
+| `path_csv` | Ruta absoluta al archivo CSV |
+| `rows` | Número de filas en la partición |
+| `missing_pct` | Porcentaje de valores faltantes (redondeado a 3 decimales) |
 
-Su propósito es proporcionar un registro centralizado de todas las particiones generadas y apoyar tareas de auditoría, control de calidad, trazabilidad completa, monitoreo de cobertura temporal y evaluación de porcentaje de faltantes por archivo.
+Su propósito es proporcionar un registro centralizado de todas las particiones generadas para auditoría, control de calidad, monitoreo de cobertura temporal y evaluación de faltantes por archivo.
 
 ---
 
 ## Flujo general del script
 
-1. Define la carpeta raíz del proyecto.
-2. Localiza la carpeta de archivos crudos descargados.
-3. Crea la carpeta de salida si no existe.
-4. Inicializa el archivo `_index.csv` si aún no existe.
-5. Verifica que `pyarrow` esté disponible para exportar archivos Parquet.
-6. Recorre todos los archivos `.txt` encontrados.
-7. Extrae el identificador de estación desde el nombre del archivo.
-8. Detecta la línea donde inicia la tabla de datos (`FECHA`).
-9. Carga la tabla con `pandas`.
-10. Elimina columnas vacías o auxiliares.
-11. Filtra únicamente fechas válidas.
-12. Convierte las variables climáticas a formato numérico.
-13. Crea una columna `year`.
-14. Divide el dataset por año.
-15. Divide cada año por variable.
-16. Guarda cada variable en CSV y Parquet.
-17. Registra la salida en `_index.csv`.
+1. Resolver la ruta raíz del proyecto automáticamente.
+2. Imprimir `PROJECT_ROOT`, `RAW_DIR` y `OUT_DIR` para verificación.
+3. Verificar que `pyarrow` esté disponible; abortar con instrucciones si no está instalado.
+4. Crear la carpeta de salida si no existe.
+5. Inicializar `_index.csv` si aún no existe.
+6. Localizar todos los archivos `.txt` en la carpeta raw.
+7. Por cada archivo:
+   - Extraer el identificador de estación del nombre del archivo.
+   - Detectar la línea de inicio de la tabla (`FECHA`).
+   - Cargar la tabla saltando la línea de encabezado y la línea de unidades, asignando nombres de columnas fijos.
+   - Filtrar fechas válidas, convertir tipos y ordenar cronológicamente.
+   - Dividir por año y por variable.
+   - Guardar cada partición en CSV y Parquet.
+   - Registrar la salida en `_index.csv`.
+8. Al finalizar, imprimir la ubicación del índice y la carpeta de salida.
+
+---
+
+## Validaciones incorporadas
+
+- Verifica que existan archivos `.txt` en la carpeta de entrada.
+- Detecta si falta el encabezado `FECHA` en un archivo y reporta el error sin interrumpir el procesamiento de los demás.
+- Filtra únicamente fechas con formato válido (`YYYY-MM-DD`).
+- Convierte automáticamente valores no numéricos a `NaN`.
+- Verifica que `pyarrow` esté instalado antes de iniciar el procesamiento.
+
+> Si alguna estación falla durante el procesamiento, el script reporta el error en consola y continúa con las demás.
 
 ---
 
 ## Requisitos
 
-Este script requiere:
-
-- Python 3.x
+- Python 3.9 o superior
 - `pandas`
 - `pyarrow`
-
-### Instalación de dependencias
 
 ```bash
 pip install pandas pyarrow
@@ -289,58 +206,39 @@ pip install pandas pyarrow
 python organize_raw_by_station_year_variable_parquet.py
 ```
 
-### Configuración importante
+> El script resuelve la ruta del proyecto automáticamente asumiendo que vive en una subcarpeta de primer nivel del repositorio (por ejemplo `Estructuracion del Dataset/`). Si se mueve a otra ubicación, ajusta la línea:
+> ```python
+> PROJECT_ROOT = Path(__file__).resolve().parent.parent
+> ```
 
-La ruta raíz del proyecto se define manualmente dentro del script:
-
-```python
-PROJECT_ROOT = r"C:\Users\Jose Garcia\Documents\10_SEMESTRE_TEC\RESIDENCIAS\Reconstruccion_de_Base_de_Datos_Nuestro"
-```
-
-> Nota: Si el proyecto se mueve a otra ubicación, esta ruta debe actualizarse antes de ejecutar el script.
-
----
-
-## Validaciones incorporadas
-
-El script incluye varias validaciones útiles para asegurar consistencia durante el procesamiento:
-
-- Verifica que exista la carpeta de entrada.
-- Verifica que existan archivos `.txt`.
-- Detecta si falta el encabezado `FECHA`.
-- Elimina columnas `Unnamed` generadas por tabulaciones extra.
-- Filtra únicamente fechas con formato válido.
-- Convierte automáticamente valores no numéricos a `NaN`.
-- Verifica que `pyarrow` esté instalado antes de guardar Parquet.
-
-> Si alguna estación falla durante el procesamiento, el script continúa con las demás y reporta el error en consola.
-
----
-
-## Ejemplo de salida en consola
+### Salida esperada en consola
 
 ```text
-Encontrados 192 archivos crudos en:
-C:\...\data\raw\conagua_smn\estado=sin\fuente=normales_climatologicas\producto=diarios_txt
+PROJECT_ROOT: /ruta/al/proyecto
+RAW_DIR: /ruta/al/proyecto/data/raw/conagua_smn/estado=sin/fuente=normales_climatologicas/producto=diarios_txt
+OUT_DIR: /ruta/al/proyecto/data/interim/organized/estado=sin
+
+Encontrados 168 archivos crudos en:
+/ruta/al/proyecto/data/raw/conagua_smn/estado=sin/fuente=normales_climatologicas/producto=diarios_txt
 
 [OK] Estación 25001: 23011 filas, años=63
 [OK] Estación 25002: 21435 filas, años=59
 [FAIL] dia25099.txt: No encontré encabezado de tabla 'FECHA'
-
+...
 Listo
 Índice generado en:
-C:\...\data\interim\organized\estado=sin\_index.csv
+/ruta/al/proyecto/data/interim/organized/estado=sin/_index.csv
 Salida organizada en:
-C:\...\data\interim\organized\estado=sin
+/ruta/al/proyecto/data/interim/organized/estado=sin
 ```
 
 ---
 
 ## Rol dentro del proyecto
 
-Este script corresponde a la transición entre la capa de datos crudos (`raw`) y la capa de datos organizados (`interim`).
+Este script corresponde a la transición entre la capa de datos crudos (`raw`) y la capa de datos organizados (`interim`). Es el paso inmediatamente posterior al script de descarga (`download_sinaloa_raw_pro.py`) y produce la estructura que consumen todos los análisis posteriores del proyecto.
 
-Dentro del proyecto de reconstrucción hidrometeorológica, este paso permite preparar una base estructurada y trazable para etapas posteriores como:
+Dentro del proyecto de reconstrucción hidrometeorológica, este paso prepara una base estructurada y trazable para etapas como:
 
 - Análisis exploratorio de datos
 - Análisis de valores faltantes
@@ -349,19 +247,15 @@ Dentro del proyecto de reconstrucción hidrometeorológica, este paso permite pr
 - Segmentación train/validation/test
 - Modelado de imputación generativa
 
-Desde el punto de vista arquitectónico, esta organización responde a principios de **modularidad**, **separación de capas**, **escalabilidad**, **reproducibilidad** y **trazabilidad del dato**, facilitando la implementación del pipeline de reconstrucción planteado en el proyecto.
-
 ---
 
-## Nombre del script
+## Autores
 
-```text
-organize_raw_by_station_year_variable_parquet.py
-```
+| Nombre | GitHub |
+|--------|--------|
+| José Ángel García Pérez | [@Josegas](https://github.com/Josegas) |
+| Sebastián Verdugo Bermúdez | [@Sebastian1247](https://github.com/Sebastian1247) |
 
----
-
-## Autor
-
-**Proyecto de Residencias**  
-*Reconstrucción de una base de datos hidrometeorológica usando técnicas de inteligencia artificial*
+**Proyecto de Residencias Profesionales**  
+*Reconstrucción de una base de datos hidrometeorológica usando técnicas de inteligencia artificial*  
+Laboratorio de Geomática y Teledetección
