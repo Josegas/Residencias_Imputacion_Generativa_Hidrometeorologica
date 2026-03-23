@@ -2,10 +2,6 @@ import csv
 import pandas as pd
 from pathlib import Path
 
-# =========================
-# CONFIG
-# =========================
-# Si el script está en /scripts/, usa .parent.parent
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 RAW_DIR = (
@@ -21,7 +17,6 @@ RAW_DIR = (
 OUT_DIR = PROJECT_ROOT / "data" / "interim" / "organized" / "estado=sin"
 INDEX_PATH = OUT_DIR / "_index.csv"
 
-# Variables esperadas por el encabezado
 EXPECTED_VARS = ["PRECIP", "EVAP", "TMAX", "TMIN"]
 
 
