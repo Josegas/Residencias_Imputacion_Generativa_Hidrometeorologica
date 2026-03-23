@@ -9,9 +9,6 @@ from urllib.error import HTTPError, URLError
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import threading
  
-# =========================
-# CONFIG
-# =========================
 ESTADO = "sin"
  
 BASE_URL = (
@@ -21,7 +18,6 @@ BASE_URL = (
  
 USER_AGENT = "CONAGUA-Downloader/2.0"
  
-# Si el script está en /Obtencion de Datos Crudos/, usa .parent.parent
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
  
 DATA_ROOT = PROJECT_ROOT / "data" / "raw" / "conagua_smn" / f"estado={ESTADO}"
