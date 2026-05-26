@@ -672,25 +672,21 @@ CV-NSE = 0.007 (alta estabilidad temporal entre décadas).
 
 ---
 
-## Pipeline de datos — CRISP-ML(Q)
+## Pipeline de datos - CRISP-ML(Q)
 
 El procesamiento sigue la metodología **CRISP-ML(Q)** organizado en capas diferenciadas. Cada etapa produce una salida validable que sirve como entrada a la siguiente.
 
-![Pipeline CRISP-ML(Q)](docs/img/CRISP-ML(Q)_Pipeline.jpg)
+![Pipeline metodológico](docs/img/pipeline_metodologia.png)
 
 ### Arquitectura del sistema
 
-**Vista conceptual** — cuatro módulos principales: ingesta → procesamiento → reconstrucción con IA → salida.
+**Vista conceptual** - cuatro módulos principales: ingesta → procesamiento → reconstrucción con IA → salida.
 
 ![Arquitectura Conceptual](docs/img/Diagrama_arq_conceptual.jpg)
 
-**Ciclo CRISP-ML(Q)** — siete fases con retroalimentación hacia fases anteriores cuando una evaluación no supera el Quality Gate.
+**Ciclo CRISP-ML(Q)** - siete fases con retroalimentación hacia fases anteriores cuando una evaluación no supera el Quality Gate.
 
 ![Metodología CRISP-ML(Q)](docs/img/diagramaCRISP-ML(Q).jpg)
-
-**Arquitectura de componentes** — pipeline completo con herramientas y tecnologías por etapa.
-
-![Arquitectura de Componentes](docs/img/CRIPS_ML(Q)_Diagrama_arq_componentes.jpg)
 
 ---
 
@@ -729,9 +725,9 @@ Se enmascaran artificialmente el 20 % de los valores observados en el split de t
 
 ## Documentación técnica
 
-El diseño completo del sistema está documentado en el Documento de Arquitectura de Software (DAS) v4.0, que incluye requerimientos funcionales y no funcionales, decisiones arquitectónicas, modelo de datos relacional y metodología detallada bajo CRISP-ML(Q).
+La metodología completa, fundamentos teóricos, decisiones de diseño y análisis de resultados están documentados en la tesis de residencias profesionales asociada a este proyecto (TECNM Campus Culiacán, 2026).
 
-Ver también: [DATA_DICTIONARY.md](reports/documentacion/DATA_DICTIONARY.md) — diccionario de datos completo de todas las variables y artefactos.
+Ver también: [DATA_DICTIONARY.md](reports/documentacion/DATA_DICTIONARY.md) - diccionario de datos completo de todas las variables y artefactos.
 
 ---
 
