@@ -1,0 +1,76 @@
+# ============================================================
+# Validación Estadística — Etapa 10 del pipeline
+# Verifica la calidad estadística del dataset imputado
+# comparando distribuciones, correlaciones y estacionariedad.
+# ============================================================
+
+input:
+  original: "data/processed/dataset_final.parquet"
+  imputed:  "data/imputed/dataset_imputado.parquet"
+
+output:
+  report_dir:  "reports/validacion_estadistica"
+  metrics:     "reports/validacion_estadistica/metricas_imputacion.csv"
+  ks_report:   "reports/validacion_estadistica/ks_test_report.csv"
+  corr_report: "reports/validacion_estadistica/correlaciones_comparativas.csv"
+  log_dir:          "reports/validacion_estadistica/_logs"
+  log_file:         "validacion_estadistica_run.log"
+  # US 6.1 — salidas de validate_seasonal_multianual.py
+  seasonal_report:  "reports/validacion_estadistica/estacional_mensual.csv"
+  multianual_report: "reports/validacion_estadistica/multianual_anual.csv"
+  # figuras generadas automáticamente en reports/validacion_estadistica/figuras/
+  #   validate_imputation.py (Etapa 10):
+  #     val_cobertura.png     — % NaN rellenados por variable vs objetivo 99%
+  #     val_distribucion.png  — KDE suavizada observado vs imputado por variable
+  #     val_correlaciones.png — correlaciones inter-variable antes/después
+  #     val_ks_test.png       — estadístico KS por variable
+  #   validate_seasonal_multianual.py (US 6.1.3 / 6.1.4):
+  #     val_estacional.png    — media mensual observado vs imputado (Ene-Dic)
+  #     val_multianual.png    — media anual ±1 std observado vs imputado
+
+columns:
+  station: "estacion"
+  date:    "date"
+
+variables: [precip, evap, tmax, tmin]
+
+# ------ Límites físicos (post-imputación) --------------------
+physical_limits:
+  precip: {min: 0.0,   max: 500.0}
+  evap:   {min: 0.0,   max: 60.0}
+  tmax:   {min: -5.0,  max: 55.0}
+  tmin:   {min: -15.0, max: 45.0}
+
+# ------ Restricción lógica -----------------------------------
+constraints:
+  tmax_gte_tmin: true
+
+# ------ KS-test ----------------------------------------------
+# Compara distribución de valores imputados vs. valores observados.
+ks_significance: 0.05   # α para el test Kolmogorov-Smirnov
+
+# ------ KPSS post-imputación ---------------------------------
+kpss_significance: 0.05
+kpss_station_threshold: 0.70   # fracción mínima de estaciones estacionarias requerida
+coverage_target_pct: 99        # objetivo de cobertura de imputación (%)
+
+# ------ Scalers -----------------------------------------------
+scalers:
+  dir: "models/scalers"
+  prefix: "scaler_"
+
+# ------ Umbrales de aceptación de métricas -------------------
+# Fracción máxima de NaN que puede quedar sin imputar.
+# (posiciones no cubiertas por ninguna ventana)
+max_residual_nan_rate: 0.05
+
+# ------ Criterios críticos (exit 1 si fallan) ----------------
+critical_checks:
+  - physical_limits_imputed   # valores fuera de rango tras imputación
+  - tmax_gte_tmin_imputed     # inversión lógica tras imputación
+
+# ------ Criterios de advertencia -----------------------------
+warning_checks:
+  - ks_test                   # cambio de distribución significativo
+  - kpss_stationarity         # pérdida de estacionariedad
+  - residual_nan_rate         # NaN residuales altos

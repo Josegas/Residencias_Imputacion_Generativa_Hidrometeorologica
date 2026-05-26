@@ -1,0 +1,5 @@
+modelo,variable,stat_orig,p_orig,stat_imp,p_imp,preserva_estacionariedad
+XGBoost,precip,1.5165,0.01,0.6277,0.0201,True
+XGBoost,evap,1.2476,0.01,1.1833,0.01,True
+XGBoost,tmax,0.4483,0.0563,0.2961,0.1,True
+XGBoost,tmin,0.5365,0.0335,0.4968,0.0424,True

@@ -1,0 +1,17 @@
+modelo,variable,stat_orig,p_orig,stat_imp,p_imp,preserva_estacionariedad
+SARIMA,precip,0.1929,0.1,0.171,0.1,True
+SARIMA,evap,0.3903,0.0813,0.0574,0.1,True
+SARIMA,tmax,1.1414,0.01,1.0547,0.01,True
+SARIMA,tmin,0.8945,0.01,0.8049,0.01,True
+ETS,precip,0.1929,0.1,0.15,0.1,True
+ETS,evap,0.3903,0.0813,0.0592,0.1,True
+ETS,tmax,1.1414,0.01,0.945,0.01,True
+ETS,tmin,0.8945,0.01,1.0686,0.01,True
+Prophet,precip,0.1929,0.1,0.2088,0.1,True
+Prophet,evap,0.3903,0.0813,0.2826,0.1,True
+Prophet,tmax,1.1414,0.01,1.0214,0.01,True
+Prophet,tmin,0.8945,0.01,0.86,0.01,True
+TBATS,precip,0.1929,0.1,0.1884,0.1,True
+TBATS,evap,0.3903,0.0813,0.0558,0.1,True
+TBATS,tmax,1.1414,0.01,1.0475,0.01,True
+TBATS,tmin,0.8945,0.01,1.1919,0.01,True

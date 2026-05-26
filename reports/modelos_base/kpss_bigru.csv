@@ -1,0 +1,5 @@
+modelo,variable,stat_orig,p_orig,stat_imp,p_imp,preserva_estacionariedad
+BiGRU,precip,0.2287,0.1,0.1581,0.1,True
+BiGRU,evap,0.1772,0.1,0.1518,0.1,True
+BiGRU,tmax,0.4415,0.0593,0.3787,0.0863,True
+BiGRU,tmin,0.1453,0.1,0.1427,0.1,True

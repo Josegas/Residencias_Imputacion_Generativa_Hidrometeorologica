@@ -1,0 +1,219 @@
+<mxfile host="65bd71144e">
+    <diagram id="cd11aS4fH9SpQJIv8hQa" name="Page-1">
+        <mxGraphModel dx="2727" dy="3507" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2700" pageHeight="620" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;font style=&quot;font-size:16px;&quot;&gt;&lt;b&gt;Pipeline de Reconstrucción Hidrometeorológica — CRISP-ML(Q)&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:11px;&quot;&gt;Pipeline local de procesamiento, modelado y aseguramiento de calidad · Python 3.13 / PyTorch 2.6 / CPU&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="18" width="2480" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="outer" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;dashed=1;dashPattern=10 5;arcSize=2;verticalAlign=top;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="70" width="2526" height="490" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#4CAF50;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="55" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1t" value="&lt;b&gt;1. Descarga de datos crudos&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Escaneo claves 25001–25300&lt;br/&gt;SMN/CONAGUA · 10 hilos&lt;br/&gt;(Ejecución local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="28" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.glue;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#388E3C;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="193" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2t" value="&lt;b&gt;2. Estructuración del dataset&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Parquet por estación/año/var&lt;br/&gt;→ data/interim/&lt;br/&gt;(Local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="166" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.glue;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#FB8C00;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="331" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3t" value="&lt;b&gt;3. Limpieza y validación&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Límites físicos · duplicados&lt;br/&gt;→ data/cleaned/&lt;br/&gt;(Local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="304" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#EF6C00;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="469" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4t" value="&lt;b&gt;4. Normalización y escalamiento&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;MinMax / Standard scalers&lt;br/&gt;→ data/scaled/ · models/scalers/&lt;br/&gt;(Local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="442" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#1E88E5;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="607" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5t" value="&lt;b&gt;5. Dataset final procesado&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Consolida particiones escaladas&lt;br/&gt;→ dataset_final.parquet&lt;br/&gt;(Local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="580" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#1976D2;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="745" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6t" value="&lt;b&gt;6. División Train / Val / Test&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;70 / 15 / 15 cronológico&lt;br/&gt;Verificación leakage&lt;br/&gt;(Local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="718" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#1565C0;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="883" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7t" value="&lt;b&gt;7. Construcción de tensores&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;X · mask · delta · meta (.pt)&lt;br/&gt;Ventana 30 días · 4 variables&lt;br/&gt;(Local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="856" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.config;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#E91E63;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1021" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8t" value="&lt;b&gt;8. Quality Gate CRISP-ML(Q)&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Límites físicos · cobertura&lt;br/&gt;Estacionariedad (KPSS)&lt;br/&gt;Criterios de aceptación&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="994" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="exp_group" value="&lt;b&gt;Módulo de Experimentación con IA&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;(Ejecución local)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#00897B;strokeWidth=2;dashed=1;dashPattern=8 4;verticalAlign=top;spacingTop=8;align=center;fontSize=11;arcSize=5;" parent="1" vertex="1">
+                    <mxGeometry x="1145" y="115" width="680" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="mb" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#7B1FA2;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1178" y="190" width="72" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="mbt" value="&lt;b&gt;Modelos Base&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:8px;&quot;&gt;SARIMA · ETS · Prophet&lt;br/&gt;TBATS · XGBoost&lt;br/&gt;Autoencoder · BiGRU · BiLSTM&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=9;fontColor=#1a1a1a;" parent="1" vertex="1">
+                    <mxGeometry x="1155" y="270" width="118" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="mg" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#00838F;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1448" y="190" width="72" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="mgt" value="&lt;b&gt;Modelos Generativos&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:8px;&quot;&gt;VAE · BRITS · GAIN&lt;br/&gt;SAITS · CSDI&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=9;fontColor=#1a1a1a;" parent="1" vertex="1">
+                    <mxGeometry x="1415" y="270" width="138" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="opt" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#E65100;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1718" y="190" width="72" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="optt" value="&lt;b&gt;Optuna · Backtesting · Selección&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:8px;&quot;&gt;TPE Bayesiano · 50 trials&lt;br/&gt;Backtesting 4-fold cronológico&lt;br/&gt;Matriz de decisión multi-criterio&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=9;fontColor=#1a1a1a;" parent="1" vertex="1">
+                    <mxGeometry x="1690" y="270" width="128" height="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#00897B;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="1885" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9t" value="&lt;b&gt;9. Imputación generativa&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;BiGRU-opt (modelo ganador)&lt;br/&gt;→ data/imputed/&lt;br/&gt;(Ejecución local)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="1858" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#8E24AA;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="2023" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10t" value="&lt;b&gt;10. Validación estadística&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;KS-test · correlaciones&lt;br/&gt;Cobertura de imputación&lt;br/&gt;RMSE · MAE · MAPE · R²&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="1996" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#D81B60;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="2161" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11t" value="&lt;b&gt;11. Monitoreo del modelo&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;PSI + KS por décadas&lt;br/&gt;Detección de drift&lt;br/&gt;Reentrenamiento periódico&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="2134" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#3949AB;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="2299" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12t" value="&lt;b&gt;12. Análisis y exportación&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;CSV global · CSVs por estación&lt;br/&gt;Excel 4 hojas · Parquet&lt;br/&gt;Python / pandas&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="2272" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="hi" value="" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;labelBackgroundColor=none;sketch=0;fontStyle=0;fillColor=#1565C0;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="2437" y="195" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="hit" value="&lt;b&gt;HydroImpute&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Aplicación Streamlit&lt;br/&gt;Visualización interactiva&lt;br/&gt;Consulta por estación&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="2410" y="282" width="132" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="a12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="e1" target="e2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a23" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e2" target="e3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a34" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e3" target="e4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a45" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e4" target="e5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a56" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e5" target="e6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a67" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e6" target="e7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a78" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e7" target="e8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a8mb" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="e8" target="mb" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="amb_mg" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="mb" target="mg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="amg_opt" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#444444;strokeWidth=1.5;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="mg" target="opt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="aopt_e9" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="opt" target="e9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a910" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e9" target="e10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1011" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e10" target="e11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1112" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;" parent="1" source="e11" target="e12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a12hi" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1565C0;strokeWidth=2;" parent="1" source="e12" target="hi" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="retro" value="&lt;i&gt;&lt;font color=&quot;#C62828&quot;&gt;Retroalimentación / Reentrenamiento&lt;/font&gt;&lt;/i&gt;" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;strokeWidth=2;dashed=1;dashPattern=8 4;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=10;align=center;labelBackgroundColor=#f5f5f5;" parent="1" source="e11" target="e8" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="2200" y="105"/>
+                            <mxPoint x="1060" y="105"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="leg_title" value="&lt;b&gt;Leyenda&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="390" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="415" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg1t" value="Ingesta de datos" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="74" y="415" width="110" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FB8C00;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="438" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg2t" value="Preprocesamiento" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="74" y="438" width="110" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E88E5;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="461" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg3t" value="Preparación para modelado" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="74" y="461" width="130" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E91E63;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="484" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg4t" value="Control de calidad" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="74" y="484" width="110" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#00897B;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="507" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg5t" value="Experimentación IA" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="74" y="507" width="110" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3949AB;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="415" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg6t" value="Despliegue y exportación" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="234" y="415" width="140" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg7" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;strokeColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="438" width="18" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg7t" value="Aplicación web (HydroImpute)" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="234" y="438" width="160" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg8" value="- - -" style="text;html=1;align=left;fontSize=12;fontColor=#C62828;" parent="1" vertex="1">
+                    <mxGeometry x="207" y="457" width="30" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="leg8t" value="Retroalimentación / Reentrenamiento" style="text;html=1;align=left;fontSize=9;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="234" y="461" width="190" height="18" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

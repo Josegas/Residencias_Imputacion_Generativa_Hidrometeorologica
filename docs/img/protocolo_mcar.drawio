@@ -1,0 +1,103 @@
+<mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="450" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- TÍTULO -->
+    <mxCell id="title" value="&lt;font style=&quot;font-size:16px;&quot;&gt;&lt;b&gt;Protocolo de Evaluación MCAR&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:11px;&quot;&gt;Evaluación sin ground truth — enmascaramiento artificial del 20% de valores conocidos&lt;/font&gt;"
+      style="text;html=1;align=center;verticalAlign=middle;fontSize=14;"
+      vertex="1" parent="1">
+      <mxGeometry x="50" y="15" width="1390" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- PASO 1: Dataset de prueba -->
+    <mxCell id="s1" value=""
+      style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;labelBackgroundColor=none;sketch=0;fontStyle=0;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#1565C0;strokeColor=none;fontSize=10;"
+      vertex="1" parent="1">
+      <mxGeometry x="70" y="130" width="78" height="78" as="geometry" />
+    </mxCell>
+    <mxCell id="s1t" value="&lt;b&gt;1. Dataset de prueba&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Registros con valores&lt;br/&gt;conocidos (observados)&lt;br/&gt;precip · evap · tmax · tmin&lt;/font&gt;"
+      style="text;html=1;align=center;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;verticalAlign=top;"
+      vertex="1" parent="1">
+      <mxGeometry x="44" y="218" width="130" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- PASO 2: Enmascaramiento MCAR -->
+    <mxCell id="s2" value=""
+      style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.config;labelBackgroundColor=none;sketch=0;fontStyle=0;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#E91E63;strokeColor=none;"
+      vertex="1" parent="1">
+      <mxGeometry x="310" y="130" width="78" height="78" as="geometry" />
+    </mxCell>
+    <mxCell id="s2t" value="&lt;b&gt;2. Enmascaramiento MCAR&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;20% de valores conocidos&lt;br/&gt;enmascarados aleatoriamente&lt;br/&gt;(missing completely at random)&lt;/font&gt;"
+      style="text;html=1;align=center;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;verticalAlign=top;"
+      vertex="1" parent="1">
+      <mxGeometry x="275" y="218" width="148" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- PASO 3: Imputación con modelo -->
+    <mxCell id="s3" value=""
+      style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sagemaker;labelBackgroundColor=none;sketch=0;fontStyle=0;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#00897B;strokeColor=none;"
+      vertex="1" parent="1">
+      <mxGeometry x="570" y="130" width="78" height="78" as="geometry" />
+    </mxCell>
+    <mxCell id="s3t" value="&lt;b&gt;3. Imputación con modelo&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;El modelo estima los valores&lt;br/&gt;enmascarados usando el&lt;br/&gt;contexto de la ventana (T=30)&lt;/font&gt;"
+      style="text;html=1;align=center;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;verticalAlign=top;"
+      vertex="1" parent="1">
+      <mxGeometry x="535" y="218" width="148" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- PASO 4: Comparación -->
+    <mxCell id="s4" value=""
+      style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;labelBackgroundColor=none;sketch=0;fontStyle=0;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#8E24AA;strokeColor=none;"
+      vertex="1" parent="1">
+      <mxGeometry x="830" y="130" width="78" height="78" as="geometry" />
+    </mxCell>
+    <mxCell id="s4t" value="&lt;b&gt;4. Comparación&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Valores imputados vs.&lt;br/&gt;valores reales enmascarados&lt;br/&gt;(ground truth artificial)&lt;/font&gt;"
+      style="text;html=1;align=center;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;verticalAlign=top;"
+      vertex="1" parent="1">
+      <mxGeometry x="795" y="218" width="148" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- PASO 5: Métricas -->
+    <mxCell id="s5" value=""
+      style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.glue;labelBackgroundColor=none;sketch=0;fontStyle=0;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#3949AB;strokeColor=none;"
+      vertex="1" parent="1">
+      <mxGeometry x="1090" y="130" width="78" height="78" as="geometry" />
+    </mxCell>
+    <mxCell id="s5t" value="&lt;b&gt;5. Métricas de evaluación&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;NSE · RMSE · MAE · R²&lt;br/&gt;por variable y por fold&lt;br/&gt;→ CV-NSE (estabilidad)&lt;/font&gt;"
+      style="text;html=1;align=center;fontSize=10;fontColor=#1a1a1a;whiteSpace=wrap;verticalAlign=top;"
+      vertex="1" parent="1">
+      <mxGeometry x="1055" y="218" width="148" height="75" as="geometry" />
+    </mxCell>
+
+    <!-- FLECHAS ENTRE PASOS -->
+    <mxCell id="a12" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s1" target="s2" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a23" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s2" target="s3" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a34" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s3" target="s4" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="a45" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#555555;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s4" target="s5" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- NOTA JUSTIFICATIVA -->
+    <mxCell id="nota" value="&lt;b&gt;Justificación:&lt;/b&gt; Los valores faltantes reales en CONAGUA/SMN no tienen ground truth disponible, por lo que no es posible calcular métricas de error directamente sobre ellos. El protocolo MCAR simula condiciones de ausencia sobre valores conocidos, proporcionando una estimación válida del error de imputación."
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;strokeWidth=1;fontSize=10;align=left;spacingLeft=8;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="70" y="360" width="1090" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- PORCENTAJE BADGE -->
+    <mxCell id="pct_badge" value="&lt;b&gt;20%&lt;/b&gt;&lt;br/&gt;enmascarado" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E91E63;strokeColor=#880E4F;fontColor=#FFFFFF;fontSize=11;align=center;" vertex="1" parent="1">
+      <mxGeometry x="325" y="80" width="50" height="50" as="geometry" />
+    </mxCell>
+    <mxCell id="pct_badge2" value="&lt;b&gt;80%&lt;/b&gt;&lt;br/&gt;contexto" style="ellipse;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=11;align=center;" vertex="1" parent="1">
+      <mxGeometry x="548" y="80" width="50" height="50" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

@@ -1,0 +1,2 @@
+fecha_ejecucion,estrategia,train_ratio,val_ratio,test_ratio,estaciones_incluidas,estaciones_omitidas,total_registros,n_train,n_val,n_test,pct_train_real,pct_val_real,pct_test_real,leakage_detectado,train_rango_global,val_rango_global,test_rango_global
+2026-05-24T19:37:17,temporal_per_station,0.7,0.15,0.15,173,0,1615838,1131008,242377,242453,70.0,15.0,15.0,False,1908-11-01 / 2024-05-29,1962-10-18 / 2025-03-26,1967-09-10 / 2026-04-30

@@ -1,0 +1,24 @@
+2026-05-24 19:46:43,268  INFO      Cargando dataset imputado: dataset_imputado.parquet  (16.0 MB)
+2026-05-24 19:46:43,394  INFO        1,615,838 filas · 173 estaciones · 6 columnas
+2026-05-24 19:46:43,395  INFO      === Estadísticas globales ===
+2026-05-24 19:46:43,467  INFO        precip: n=1,615,792  mean=1.959  std=8.770  min=0.000  max=390.500
+2026-05-24 19:46:43,543  INFO        evap  : n=1,614,949  mean=5.328  std=2.065  min=0.000  max=24.950
+2026-05-24 19:46:43,618  INFO        tmax  : n=1,615,619  mean=32.576  std=4.752  min=2.500  max=55.000
+2026-05-24 19:46:43,680  INFO        tmin  : n=1,615,619  mean=16.658  std=5.997  min=-10.000  max=37.000
+2026-05-24 19:46:43,683  INFO      === Estadísticas por estación ===
+2026-05-24 19:46:43,911  INFO        Estadísticas por estación calculadas (173 estaciones)
+2026-05-24 19:46:43,924  INFO      === Cobertura por variable ===
+2026-05-24 19:46:43,926  INFO        precip: 1,615,792 válidos / 1,615,838 total  (46 NaN residuales, 100.00% cobertura)
+2026-05-24 19:46:43,928  INFO        evap  : 1,614,949 válidos / 1,615,838 total  (889 NaN residuales, 99.94% cobertura)
+2026-05-24 19:46:43,929  INFO        tmax  : 1,615,619 válidos / 1,615,838 total  (219 NaN residuales, 99.99% cobertura)
+2026-05-24 19:46:43,930  INFO        tmin  : 1,615,619 válidos / 1,615,838 total  (219 NaN residuales, 99.99% cobertura)
+2026-05-24 19:46:43,931  INFO      === Resumen anual ===
+2026-05-24 19:46:44,172  INFO        Resumen anual calculado (110 años)
+2026-05-24 19:46:44,178  INFO      === Exportando CSV combinado ===
+2026-05-24 19:46:47,573  INFO        CSV exportado: data/export/dataset_imputado.csv  (67.7 MB, 1,615,838 filas)
+2026-05-24 19:46:47,573  INFO      === Exportando CSV por estación ===
+2026-05-24 19:46:50,964  INFO        173 CSVs por estación → data/export/por_estacion/  (173 archivos, ~0.0 MB total)
+2026-05-24 19:46:50,976  INFO      === Exportando Excel ===
+2026-05-24 19:46:51,102  INFO        Excel exportado: data/export/resumen_estadistico.xlsx  (49 KB, 4 hojas)
+2026-05-24 19:46:51,110  INFO      Reporte exportación → reports/exportacion/export_report.csv
+2026-05-24 19:46:51,110  INFO      === Exportación completada ===

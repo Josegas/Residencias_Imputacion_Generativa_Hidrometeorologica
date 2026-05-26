@@ -1,0 +1,36 @@
+2026-05-24 19:44:38,341  INFO      ============================================================
+2026-05-24 19:44:38,341  INFO      INICIO — Quality Gate CRISP-ML(Q)
+2026-05-24 19:44:38,341  INFO      ============================================================
+2026-05-24 19:44:38,466  INFO      Dataset cargado : data/processed/dataset_final.parquet
+2026-05-24 19:44:38,466  INFO      Filas           : 1,615,838  |  Columnas: ['estacion', 'date', 'precip', 'evap', 'tmax', 'tmin']
+2026-05-24 19:44:38,518  INFO      Scalers cargados : ['precip', 'evap', 'tmax', 'tmin']
+2026-05-24 19:44:38,635  INFO      ----------------------------------------
+2026-05-24 19:44:38,636  INFO      Criterios CRÍTICOS (en escala original)
+2026-05-24 19:44:38,636  INFO      ----------------------------------------
+2026-05-24 19:44:38,657  INFO      [OK]      physical_limits precip: sin violaciones
+2026-05-24 19:44:38,670  INFO      [OK]      physical_limits evap: sin violaciones
+2026-05-24 19:44:38,683  INFO      [OK]      physical_limits tmax: sin violaciones
+2026-05-24 19:44:38,691  INFO      [OK]      physical_limits tmin: sin violaciones
+2026-05-24 19:44:38,876  INFO      [OK]      min_valid_obs: todas las estaciones >= 365 obs
+2026-05-24 19:44:38,927  INFO      [OK]      tmax_gte_tmin_observed: sin inversiones
+2026-05-24 19:44:38,928  INFO      ----------------------------------------
+2026-05-24 19:44:38,928  INFO      Criterios WARNING
+2026-05-24 19:44:38,928  INFO      ----------------------------------------
+2026-05-24 19:44:38,930  INFO      [OK     ] missing_rate precip: 0.7% (<= 60%)
+2026-05-24 19:44:38,932  INFO      [OK     ] missing_rate evap: 38.8% (<= 85%)
+2026-05-24 19:44:38,933  INFO      [OK     ] missing_rate tmax: 7.0% (<= 60%)
+2026-05-24 19:44:38,935  INFO      [OK     ] missing_rate tmin: 7.0% (<= 60%)
+2026-05-24 19:44:39,092  INFO      [OK     ] kpss precip: 158/173 estaciones estacionarias (91.3%)
+2026-05-24 19:44:39,245  INFO      [WARNING] kpss evap: 90/137 estaciones estacionarias (65.7%)
+2026-05-24 19:44:39,389  INFO      [WARNING] kpss tmax: 104/173 estaciones estacionarias (60.1%)
+2026-05-24 19:44:39,534  INFO      [OK     ] kpss tmin: 146/173 estaciones estacionarias (84.4%)
+2026-05-24 19:44:39,548  INFO      Reporte guardado: reports/quality_gate/quality_gate_report.csv
+2026-05-24 19:44:39,548  INFO      ----------------------------------------
+2026-05-24 19:44:39,548  INFO      Generando figuras
+2026-05-24 19:44:39,548  INFO      ----------------------------------------
+2026-05-24 19:44:39,671  INFO        figura: reports/quality_gate/figuras/qg_criterios.png
+2026-05-24 19:44:39,750  INFO        figura: reports/quality_gate/figuras/qg_missing_rate.png
+2026-05-24 19:44:39,824  INFO        figura: reports/quality_gate/figuras/qg_kpss.png
+2026-05-24 19:44:39,824  INFO      ============================================================
+2026-05-24 19:44:39,824  INFO      QUALITY GATE SUPERADO — dataset aprobado para imputación.
+2026-05-24 19:44:39,824  INFO      ============================================================

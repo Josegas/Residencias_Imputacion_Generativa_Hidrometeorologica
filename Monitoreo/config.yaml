@@ -1,0 +1,55 @@
+# ============================================================
+# Monitoreo del modelo — Etapa 11 del pipeline
+# Detecta drift distribucional y genera alertas de reentrenamiento
+# comparando el dataset imputado por ventanas temporales decadales.
+# ============================================================
+
+input:
+  original: "data/processed/dataset_final.parquet"
+  imputed:  "data/imputed/dataset_imputado.parquet"
+
+output:
+  report_dir:       "reports/monitoreo"
+  drift_report:     "reports/monitoreo/drift_report.csv"
+  coverage_report:  "reports/monitoreo/cobertura_temporal.csv"
+  log_dir:          "reports/monitoreo/_logs"
+  log_file:         "monitoreo_run.log"
+  # figuras → reports/monitoreo/figuras/ (generado automáticamente)
+  #   drift_decadal.png  — PSI por década por variable
+  #   cobertura_temporal.png — NaN residual por período
+
+columns:
+  station: "estacion"
+  date:    "date"
+
+variables: [precip, evap, tmax, tmin]
+
+# ------ Ventana de referencia (baseline para PSI) ----------
+reference_window:
+  start: 1970
+  end:   2000
+
+# ------ Tamaño de ventana decadal en años ------------------
+window_years: 10
+
+# ------ Umbrales PSI ---------------------------------------
+# 0.00–0.10 : sin cambio significativo
+# 0.10–0.20 : cambio moderado (WARNING)
+# >0.20     : cambio significativo → alerta de reentrenamiento
+psi_warning:  0.10
+psi_critical: 0.20
+
+# ------ Significancia KS -----------------------------------
+ks_significance: 0.05
+
+# ------ Objetivo de cobertura de imputación (%) -----------
+coverage_target_pct: 99
+
+# ------ Criterios críticos (exit 1 si fallan) --------------
+critical_checks:
+  - psi_critical   # drift PSI > 0.20 en ventana más reciente
+
+# ------ Criterios de advertencia ---------------------------
+warning_checks:
+  - psi_warning    # drift PSI 0.10–0.20
+  - ks_drift       # distribución significativamente diferente

@@ -1,0 +1,5 @@
+variable,n_observed,n_imputed,ks_statistic,p_value,resultado
+precip,1605151,10641,0.773267,0.0,WARNING
+evap,988635,626314,0.344434,0.0,WARNING
+tmax,1502660,112959,0.584026,0.0,WARNING
+tmin,1502660,112959,0.468916,0.0,WARNING

@@ -1,0 +1,176 @@
+<mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="520" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- TÍTULO -->
+    <mxCell id="title" value="&lt;font style=&quot;font-size:16px;&quot;&gt;&lt;b&gt;Protocolo de Backtesting Cronológico — 4 Folds&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:11px;&quot;&gt;Evaluación temporal sobre el conjunto de prueba (15% por estación) · Protocolo MCAR 20%&lt;/font&gt;"
+      style="text;html=1;align=center;verticalAlign=middle;fontSize=14;"
+      vertex="1" parent="1">
+      <mxGeometry x="50" y="15" width="1480" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- BARRA REFERENCIA: ENTRENAMIENTO + VALIDACIÓN -->
+    <mxCell id="trainval_bar" value="&lt;b&gt;Entrenamiento + Validación (85% por estación · 1908–~2025)&lt;/b&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;Modelo ajustado con datos anteriores al período de evaluación&lt;/font&gt;"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=2;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="100" y="78" width="1300" height="45" as="geometry" />
+    </mxCell>
+
+    <!-- ETIQUETA PERÍODO DE EVALUACIÓN -->
+    <mxCell id="eval_label" value="&lt;b&gt;Conjunto de Prueba — Período de evaluación: 1967–2026&lt;/b&gt;"
+      style="text;html=1;align=center;fontSize=11;fontColor=#555555;"
+      vertex="1" parent="1">
+      <mxGeometry x="100" y="135" width="1300" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- FOLD 1: 1967–1975 (8 años, 163px) -->
+    <mxCell id="f1" value="&lt;b&gt;Fold 1&lt;/b&gt;&lt;br/&gt;1967 – 1975&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;8 años&lt;br/&gt;MCAR 20%&lt;/font&gt;"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4CAF50;strokeColor=#2E7D32;strokeWidth=2;fontColor=#FFFFFF;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="100" y="160" width="163" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- FOLD 2: 1976–1990 (14 años, 285px) -->
+    <mxCell id="f2" value="&lt;b&gt;Fold 2&lt;/b&gt;&lt;br/&gt;1976 – 1990&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;14 años&lt;br/&gt;MCAR 20%&lt;/font&gt;"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E88E5;strokeColor=#1565C0;strokeWidth=2;fontColor=#FFFFFF;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="283" y="160" width="285" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- FOLD 3: 1991–2007 (16 años, 325px) -->
+    <mxCell id="f3" value="&lt;b&gt;Fold 3&lt;/b&gt;&lt;br/&gt;1991 – 2007&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;16 años&lt;br/&gt;MCAR 20%&lt;/font&gt;"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF9800;strokeColor=#E65100;strokeWidth=2;fontColor=#FFFFFF;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="588" y="160" width="325" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- FOLD 4: 2008–2026 (18 años, 366px) -->
+    <mxCell id="f4" value="&lt;b&gt;Fold 4&lt;/b&gt;&lt;br/&gt;2008 – 2026&lt;br/&gt;&lt;font style=&quot;font-size:9px;&quot;&gt;18 años&lt;br/&gt;MCAR 20%&lt;/font&gt;"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9C27B0;strokeColor=#6A1B9A;strokeWidth=2;fontColor=#FFFFFF;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="933" y="160" width="367" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- LÍNEA DE TIEMPO (eje) -->
+    <mxCell id="timeline" value="" style="endArrow=block;endFill=1;html=1;strokeColor=#333333;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry x="90" y="275" width="50" height="50" as="geometry">
+        <Array as="points" />
+        <mxPoint x="90" y="275" as="sourcePoint" />
+        <mxPoint x="1320" y="275" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+
+    <!-- TICKS Y AÑOS EN EL EJE -->
+    <mxCell id="y1967" value="1967" style="text;html=1;align=center;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="86" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t1967" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="100" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y1975" value="1975" style="text;html=1;align=center;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="245" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t1975" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="263" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y1976" value="1976" style="text;html=1;align=center;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="268" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t1976" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="283" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y1990" value="1990" style="text;html=1;align=center;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="551" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t1990" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="568" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y1991" value="1991" style="text;html=1;align=center;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="573" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t1991" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="588" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y2007" value="2007" style="text;html=1;align=center;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="897" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t2007" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="913" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y2008" value="2008" style="text;html=1;align=center;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="918" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t2008" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="933" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <mxCell id="y2026" value="2026" style="text;html=1;align=center;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1280" y="278" width="40" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="t2026" value="" style="line;html=1;strokeColor=#333333;" vertex="1" parent="1">
+      <mxGeometry x="1300" y="268" width="1" height="14" as="geometry" />
+    </mxCell>
+
+    <!-- ETIQUETA EJE TEMPORAL -->
+    <mxCell id="axis_label" value="Tiempo (años)" style="text;html=1;align=center;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1310" y="268" width="100" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- CAJAS DE MÉTRICAS EVALUADAS -->
+    <mxCell id="metrics_box" value="&lt;b&gt;Métricas evaluadas en cada fold:&lt;/b&gt; NSE · RMSE · MAE · R² · KPSS&lt;br/&gt;por variable: precip · evap · tmax · tmin"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;strokeWidth=1;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="370" y="310" width="560" height="45" as="geometry" />
+    </mxCell>
+
+    <!-- CV-NSE EXPLICACIÓN -->
+    <mxCell id="cvnse_box" value="&lt;b&gt;CV-NSE&lt;/b&gt; = desviación estándar del NSE entre los 4 folds (estabilidad temporal del modelo)"
+      style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1;fontSize=10;align=center;verticalAlign=middle;"
+      vertex="1" parent="1">
+      <mxGeometry x="370" y="368" width="560" height="35" as="geometry" />
+    </mxCell>
+
+    <!-- LEYENDA -->
+    <mxCell id="leg_title" value="&lt;b&gt;Leyenda&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="100" y="418" width="80" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="l1" value="" style="rounded=1;fillColor=#4CAF50;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="100" y="440" width="16" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l1t" value="Fold 1 (1967–75)" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="121" y="440" width="120" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l2" value="" style="rounded=1;fillColor=#1E88E5;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="255" y="440" width="16" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l2t" value="Fold 2 (1976–90)" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="276" y="440" width="120" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l3" value="" style="rounded=1;fillColor=#FF9800;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="410" y="440" width="16" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l3t" value="Fold 3 (1991–07)" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="431" y="440" width="120" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l4" value="" style="rounded=1;fillColor=#9C27B0;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="565" y="440" width="16" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l4t" value="Fold 4 (2008–26)" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="586" y="440" width="120" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l5" value="" style="rounded=1;fillColor=#E8EAF6;strokeColor=#3F51B5;" vertex="1" parent="1">
+      <mxGeometry x="720" y="440" width="16" height="16" as="geometry" />
+    </mxCell>
+    <mxCell id="l5t" value="Entrenamiento + Validación (85%)" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="741" y="440" width="190" height="16" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

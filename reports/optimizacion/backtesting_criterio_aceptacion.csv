@@ -1,0 +1,5 @@
+,nse_media,cv,paso
+BRITS-opt,0.6056,0.0053,True
+SAITS-opt,0.6024,0.008,True
+BiGRU-opt,0.6205,0.0074,True
+XGBoost-opt,0.6131,0.0267,True

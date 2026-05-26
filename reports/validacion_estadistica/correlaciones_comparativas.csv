@@ -1,0 +1,7 @@
+par,corr_original,corr_imputado,delta
+precip-evap,-0.01116,-0.043642,-0.032482
+precip-tmax,-0.018859,-0.021281,-0.002422
+precip-tmin,0.168982,0.163623,-0.005359
+evap-tmax,0.571218,0.551078,-0.02014
+evap-tmin,0.292363,0.24625,-0.046114
+tmax-tmin,0.524736,0.525038,0.000302

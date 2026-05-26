@@ -1,0 +1,5 @@
+Variable,MAE escalado,Factor,MAE real,Unidad,NSE
+precip,0.0088,390.5,3.438,mm/día,0.0561
+evap,0.04401,24.94,1.098,mm/día,0.6477
+tmax,0.28438,4.903,1.394,°C,0.847
+tmin,0.18868,6.205,1.171,°C,0.9311

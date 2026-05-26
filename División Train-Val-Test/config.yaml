@@ -1,0 +1,75 @@
+# ============================================================
+# División Train / Val / Test — RES-28 (subtarea RES-109)
+# Proporciones y criterios de partición para series temporales
+# hidrometeorologicas de Sinaloa.
+# ============================================================
+
+# ------ Proporciones ----------------------------------------
+split:
+  train_ratio: 0.70          # 70 % de los registros por estación
+  val_ratio:   0.15          # 15 % de los registros por estación
+  test_ratio:  0.15          # 15 % de los registros por estación
+
+  # Estrategia de partición:
+  #   "temporal_per_station" — divide cada estación de forma independiente
+  #   y cronológica.  Los N primeros registros (ordenados por fecha) van a
+  #   entrenamiento, los siguientes al conjunto de validación y los últimos
+  #   al de prueba.  Esta estrategia evita fuga de información y maximiza
+  #   el uso de datos ante rangos temporales heterogéneos entre estaciones.
+  strategy: "temporal_per_station"
+
+  # Semilla (documentada para reproducibilidad; no se usa aleatorización
+  # porque la división es puramente determinista por orden temporal).
+  random_seed: 42
+
+  # Mínimo de registros para que una estación participe en la partición.
+  # Estaciones con menos registros se excluyen del split y se documentan.
+  min_records_per_station: 30
+
+# ------ Rutas de entrada ------------------------------------
+input:
+  dataset_path:  "data/processed/dataset_final.parquet"
+  index_path:    "data/processed/_index_processed.csv"
+  variables:     [precip, evap, tmax, tmin]   # columnas de variables a reportar
+  date_col:      date                          # columna de fecha en el dataset
+  station_col:   estacion                      # columna de identificador de estación
+
+# ------ Rutas de salida -------------------------------------
+output:
+  splits_dir:    "data/splits"
+
+  # Cada subconjunto vive en su propia subcarpeta
+  train_parquet: "data/splits/train/train.parquet"
+  train_csv:     "data/splits/train/train.csv"
+  val_parquet:   "data/splits/val/val.parquet"
+  val_csv:       "data/splits/val/val.csv"
+  test_parquet:  "data/splits/test/test.parquet"
+  test_csv:      "data/splits/test/test.csv"
+
+  # Índice de fronteras por estación (reproducibilidad)
+  split_index:   "data/splits/split_index.csv"
+
+  # Reporte de métricas del split
+  split_report:  "reports/split_report.csv"
+
+  # Log de ejecución
+  log_path:      "data/splits/_logs/split_run.log"
+
+# ------ Criterios de anti-leakage ---------------------------
+leakage:
+  # Verificar que para cada estación:
+  #   max(train.date) < min(val.date)   [train termina antes de que val empiece]
+  #   max(val.date)   < min(test.date)  [val termina antes de que test empiece]
+  verify_temporal_order: true
+
+  # Verificar que la intersección de fechas entre conjuntos sea vacía
+  # para cada estación individualmente.
+  verify_date_intersection: true
+
+  # Cortar en modo "strict": el límite de corte se calcula con floor()
+  # para garantizar que no haya registro asignado a dos conjuntos.
+  boundary_mode: "floor"
+
+  # Tolerancia máxima permitida entre la proporción real y la configurada.
+  # Si la desviación supera este valor, verify_leakage.py reporta FAIL.
+  proportion_tolerance: 0.03

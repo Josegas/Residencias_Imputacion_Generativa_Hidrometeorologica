@@ -1,0 +1,115 @@
+# Configuración del pipeline de normalización y escalamiento — normalize.py
+# Edita este archivo para adaptar el script a otro estado, fuente o conjunto de variables.
+
+paths:
+  # Ruta de entrada (relativa a PROJECT_ROOT)
+  cleaned_subpath:
+    - data
+    - cleaned
+    - organized
+    - "estado=sin"
+
+  # Ruta de salida de datos escalados (relativa a PROJECT_ROOT)
+  scaled_subpath:
+    - data
+    - scaled
+    - organized
+    - "estado=sin"
+
+  # Ruta de salida de los scalers entrenados (relativa a PROJECT_ROOT)
+  scalers_subpath:
+    - models
+    - scalers
+
+  # Nombre del índice de entrada (generado por cleaning.py)
+  index_in_filename: "_index_cleaned.csv"
+
+  # Nombre del índice de salida (particiones escaladas)
+  index_out_filename: "_index_scaled.csv"
+
+  # Log de ejecución
+  log_subpath:
+    - data
+    - scaled
+    - logs
+  log_filename: "normalize_run.log"
+
+  # Reportes
+  reports_subpath:
+    - reports
+  report_filename: "scaling_report.csv"
+  scalers_metadata_filename: "scalers_metadata.csv"
+
+# ─────────────────────────────────────────────────────────────────────
+# Segmentos de ruta usados para navegar la jerarquía data/
+# Usados internamente para reconstruir rutas de cleaned → scaled.
+# Cámbialos si renombras las capas del proyecto.
+# ─────────────────────────────────────────────────────────────────────
+path_segments:
+  data: "data"
+  cleaned: "cleaned"
+  scaled: "scaled"
+
+# ─────────────────────────────────────────────────────────────────────
+# Esquema de columnas y convenciones de salida
+# ─────────────────────────────────────────────────────────────────────
+output:
+  # Nombre de la columna de valor en los parquets de entrada y salida
+  value_column: "value"
+
+  # Ancho de zero-padding para el ID de estación (ej. 5 → "25001")
+  station_id_zfill: 5
+
+  # Prefijo del nombre de archivo para los scalers serializados
+  scaler_filename_prefix: "scaler_"
+
+  # Cada cuántas particiones imprimir progreso en el log
+  progress_log_interval: 500
+
+# ─────────────────────────────────────────────────────────────────────
+# Reproducibilidad
+# ─────────────────────────────────────────────────────────────────────
+reproducibility:
+  random_seed: 42
+
+# ─────────────────────────────────────────────────────────────────────
+# Configuración de scalers por variable
+#
+# tipo          : "MinMaxScaler" o "StandardScaler"
+# feature_range : solo para MinMaxScaler — rango de salida [min, max]
+# justificacion : razón documentada de la elección del scaler
+#
+# Decisiones de diseño:
+#   - MinMaxScaler  → PRECIP y EVAP
+#       Rango [0, 1]. Ideal para variables con límite inferior fijo en 0
+#       y distribución asimétrica con muchos ceros (precipitación).
+#   - StandardScaler → TMAX y TMIN
+#       Media 0, desviación estándar 1. Ideal para distribuciones
+#       aproximadamente simétricas. Estándar para redes neuronales.
+# ─────────────────────────────────────────────────────────────────────
+scalers:
+  precip:
+    tipo: "MinMaxScaler"
+    feature_range: [0, 1]
+    justificacion: >
+      Rango [0, 1]. Variable con límite inferior fijo en 0 y distribución
+      asimétrica con muchos ceros. MinMaxScaler preserva esa estructura.
+  evap:
+    tipo: "MinMaxScaler"
+    feature_range: [0, 1]
+    justificacion: >
+      Rango [0, 1]. Variable con límite inferior fijo en 0 y distribución
+      asimétrica. MinMaxScaler preserva la proporción entre días de alta
+      y baja evaporación.
+  tmax:
+    tipo: "StandardScaler"
+    justificacion: >
+      Media 0, desviación estándar 1. Distribución aproximadamente
+      simétrica. Estándar para redes neuronales (LSTM, GAN) que trabajan
+      con temperatura.
+  tmin:
+    tipo: "StandardScaler"
+    justificacion: >
+      Media 0, desviación estándar 1. Distribución aproximadamente
+      simétrica. Estándar para redes neuronales (LSTM, GAN) que trabajan
+      con temperatura.

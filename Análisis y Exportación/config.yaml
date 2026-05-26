@@ -1,0 +1,37 @@
+# ============================================================
+# Análisis y Exportación — Etapa 12 del pipeline
+# Genera el dataset final en formatos CSV y Excel con estadísticas
+# resumidas por variable y por estación.
+# ============================================================
+
+input:
+  imputed: "data/imputed/dataset_imputado.parquet"
+
+output:
+  export_dir:       "data/export"
+  csv_file:         "data/export/dataset_imputado.csv"
+  per_station_dir:  "data/export/por_estacion"
+  excel_file:       "data/export/resumen_estadistico.xlsx"
+  report_dir:       "reports/exportacion"
+  export_report:    "reports/exportacion/export_report.csv"
+  log_dir:          "reports/exportacion/_logs"
+  log_file:         "exportacion_run.log"
+
+columns:
+  station: "estacion"
+  date:    "date"
+
+variables: [precip, evap, tmax, tmin]
+
+# ------ Configuración CSV ----------------------------------
+csv_separator: ","
+csv_encoding:  "utf-8"
+
+# ------ Hojas del Excel ------------------------------------
+# El Excel contiene estadísticas resumidas (no el dataset completo,
+# que supera el límite de filas de Excel con 1.6M registros).
+excel_sheets:
+  - estadisticas_globales   # media, std, min, max, percentiles por variable
+  - por_estacion            # media y cobertura por estación
+  - cobertura_por_variable  # NaN residual y tasa de llenado por variable
+  - resumen_anual           # media anual por variable (período completo)

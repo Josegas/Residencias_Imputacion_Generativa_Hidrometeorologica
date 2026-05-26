@@ -1,0 +1,71 @@
+# ============================================================
+# Quality Gate CRISP-ML(Q) — Etapa 8 del pipeline
+# Verificación de calidad del dataset antes de la imputación.
+#
+# Criterios CRÍTICOS → exit code 1, pipeline se detiene.
+# Criterios WARNING  → se registran pero no detienen el pipeline.
+# ============================================================
+
+input:
+  dataset: "data/processed/dataset_final.parquet"
+
+output:
+  report:   "reports/quality_gate/quality_gate_report.csv"
+  log_dir:  "reports/quality_gate/_logs"
+  log_file: "quality_gate_run.log"
+  # figuras generadas automáticamente en reports/quality_gate/figuras/
+  #   qg_criterios.png    — estado PASS/WARNING/FAIL por criterio y variable
+  #   qg_missing_rate.png — tasa de faltantes vs umbral por variable
+  #   qg_kpss.png         — % estaciones estacionarias por variable
+
+columns:
+  station: "estacion"
+  date:    "date"
+
+variables: [precip, evap, tmax, tmin]
+
+# ------ Límites físicos (consistentes con cleaning.py) -------
+physical_limits:
+  precip: {min: 0.0,   max: 500.0}
+  evap:   {min: 0.0,   max: 60.0}
+  tmax:   {min: -5.0,  max: 55.0}
+  tmin:   {min: -15.0, max: 45.0}
+
+# ------ Umbrales de faltantes --------------------------------
+# Fracción máxima de NaN permitida por variable globalmente.
+# evap es alta porque muchas estaciones son pluviométricas puras.
+missing_rate_thresholds:
+  precip: 0.60
+  evap:   0.85
+  tmax:   0.60
+  tmin:   0.60
+
+# ------ Mínimo de observaciones válidas por estación ---------
+# Estaciones con menos observaciones quedan fuera del modelo.
+min_valid_obs_per_station: 365  # ~1 año de datos
+
+# ------ Restricción lógica -----------------------------------
+constraints:
+  tmax_gte_tmin: true   # inversión en observados = error no resuelto
+
+# ------ KPSS -------------------------------------------------
+kpss_significance: 0.05        # nivel α para el test de estacionariedad
+kpss_station_threshold: 0.70   # fracción mínima de estaciones estacionarias requerida
+
+# ------ Scalers -----------------------------------------------
+# Directorio y convención de nombres para inverse-transform.
+scalers:
+  dir: "models/scalers"   # relativo a la raíz del proyecto
+  prefix: "scaler_"        # nombre del archivo: {prefix}{variable}.pkl
+
+# ------ Clasificación de criterios ---------------------------
+# Críticos: si fallan el pipeline se detiene (exit 1).
+# Advertencia: se registran en el reporte pero no detienen.
+critical_checks:
+  - physical_limits         # valores fuera de rango = cleaning fallido
+  - min_valid_obs           # sin datos suficientes el modelo no opera
+  - tmax_gte_tmin_observed  # inversión en observados = dato corrupto
+
+warning_checks:
+  - missing_rate            # tasa de faltantes alta pero manejable
+  - kpss_stationarity       # KPSS orienta, no bloquea

@@ -1,0 +1,90 @@
+# Configuración del pipeline de limpieza inicial — cleaning.py
+# Edita este archivo para adaptar el script a otro estado, fuente o conjunto de variables.
+
+paths:
+  # Ruta de entrada (relativa a PROJECT_ROOT)
+  interim_subpath:
+    - data
+    - interim
+    - organized
+    - "estado=sin"
+
+  # Ruta de salida (relativa a PROJECT_ROOT)
+  cleaned_subpath:
+    - data
+    - cleaned
+    - organized
+    - "estado=sin"
+
+  # Nombre del índice de entrada (generado por organize_raw_by_station_year_variable_parquet.py)
+  index_filename: "_index.csv"
+
+  # Nombre del índice de salida (particiones limpias)
+  index_out_filename: "_index_cleaned.csv"
+
+  # Log de ejecución
+  log_subpath:
+    - data
+    - cleaned
+    - logs
+  log_filename: "cleaning_run.log"
+
+  # Reportes
+  reports_subpath:
+    - reports
+  report_filename: "cleaning_report.csv"
+  validation_report_filename: "validation_report.csv"
+
+# ─────────────────────────────────────────────────────────────────────
+# Segmentos de ruta usados para navegar la jerarquía data/
+# Usados internamente para reconstruir rutas de interim → cleaned.
+# Cámbialos si renombras las capas del proyecto.
+# ─────────────────────────────────────────────────────────────────────
+path_segments:
+  data: "data"
+  interim: "interim"
+  cleaned: "cleaned"
+
+# ─────────────────────────────────────────────────────────────────────
+# Límites físicos por variable
+# Basados en hallazgos del EDA (actividad 2.4).
+# Valores fuera de estos rangos son imposibles físicamente y se
+# convierten a NaN. Ajusta estos valores si cambias de región o fuente.
+# ─────────────────────────────────────────────────────────────────────
+physical_limits:
+  precip:
+    min: 0.0     # No puede llover negativo
+    max: 500.0   # Margen conservador sobre el máximo histórico real (390.5 mm, evento ciclónico)
+  evap:
+    min: 0.0     # No puede haber evaporación negativa
+    max: 60.0    # Margen sobre el máximo histórico real (24.95 mm)
+  tmax:
+    min: -5.0    # Límite inferior conservador para errores extremos
+    max: 55.0    # Límite superior conservador (máximo sospechoso EDA: 55 C)
+  tmin:
+    min: -15.0   # Límite inferior conservador (mínimo registrado: -10 C)
+    max: 45.0    # Límite superior conservador
+
+# ─────────────────────────────────────────────────────────────────────
+# Umbrales IQR documentados del EDA (actividad 2.4)
+# Solo para DOCUMENTAR — estos valores se conservan en los datos.
+# Decisión: outliers IQR de temperatura pueden corresponder a
+# registros reales de estaciones en la sierra de Sinaloa.
+# ─────────────────────────────────────────────────────────────────────
+iqr_thresholds:
+  precip:
+    lower: 0.0
+    upper: 0.0
+    nota: "IQR=0, cualquier valor positivo es outlier estadistico pero no error"
+  evap:
+    lower: 0.0
+    upper: 12.18
+    nota: "870 outliers altos en EDA (0.88%) — dias de alta evaporacion"
+  tmax:
+    lower: 20.25
+    upper: 45.45
+    nota: "22,969 outliers en EDA: 963 altos >45.45C, 22,006 bajos <20.25C — posibles registros de sierra"
+  tmin:
+    lower: -3.75
+    upper: 38.25
+    nota: "517 outliers bajos en EDA (0.03%) — valores hasta -10C, posibles registros de sierra"

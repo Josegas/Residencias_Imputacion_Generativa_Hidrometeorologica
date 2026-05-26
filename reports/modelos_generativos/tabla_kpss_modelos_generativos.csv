@@ -1,0 +1,17 @@
+modelo,variable,p_imp,p_orig,preserva_estacionariedad,stat_imp,stat_orig
+BRITS,evap,0.1,0.1,True,0.1772,0.1772
+BRITS,precip,0.1,0.1,True,0.2287,0.2287
+BRITS,tmax,0.0593,0.0593,True,0.4415,0.4415
+BRITS,tmin,0.1,0.1,True,0.1453,0.1453
+CSDI,evap,0.1,0.1,True,0.1772,0.1772
+CSDI,precip,0.1,0.1,True,0.2287,0.2287
+CSDI,tmax,0.0593,0.0593,True,0.4415,0.4415
+CSDI,tmin,0.1,0.1,True,0.1453,0.1453
+GAIN,evap,0.1,0.1,True,0.1772,0.1772
+GAIN,precip,0.1,0.1,True,0.2287,0.2287
+GAIN,tmax,0.0593,0.0593,True,0.4415,0.4415
+GAIN,tmin,0.1,0.1,True,0.1453,0.1453
+SAITS,evap,0.1,0.1,True,0.1689,0.1772
+SAITS,precip,0.1,0.1,True,0.1408,0.2287
+SAITS,tmax,0.0551,0.0593,True,0.4513,0.4415
+SAITS,tmin,0.1,0.1,True,0.1535,0.1453

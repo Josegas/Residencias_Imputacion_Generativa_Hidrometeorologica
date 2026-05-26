@@ -1,0 +1,105 @@
+# Configuración del pipeline de organización de datos crudos
+# Edita este archivo para adaptar el script a otro estado, fuente o conjunto de variables.
+
+paths:
+  # Ruta de entrada (relativa a PROJECT_ROOT)
+  raw_subpath:
+    - data
+    - raw
+    - conagua_smn
+    - "estado=sin"
+    - "fuente=normales_climatologicas"
+    - "producto=diarios_txt"
+
+  # Ruta de salida (relativa a PROJECT_ROOT)
+  out_subpath:
+    - data
+    - interim
+    - organized
+    - "estado=sin"
+
+  # Nombre del archivo de índice generado dentro de out_subpath
+  index_filename: "_index.csv"
+
+parsing:
+  # Separador de columnas en los archivos TXT
+  separator: "\t"
+
+  # Motor de pandas para leer CSV/TXT
+  csv_engine: "python"
+
+  # Palabra clave que marca el inicio de la tabla de datos
+  table_header_marker: "FECHA"
+
+  # Líneas a saltar DESPUÉS de la línea marcadora (ej. 1 línea de unidades)
+  header_skip_after_marker: 1
+
+  # Nombres de columnas (el primero siempre es la fecha)
+  column_names:
+    - date
+    - PRECIP
+    - EVAP
+    - TMAX
+    - TMIN
+
+  # Strings que se tratan como valores nulos
+  na_values:
+    - "NULO"
+    - "Nulo"
+    - "nulo"
+    - ""
+
+  # Formato de fecha esperado en la columna date
+  date_format: "%Y-%m-%d"
+
+  # Regex para validar que una celda es una fecha válida
+  date_regex: '^\d{4}-\d{2}-\d{2}$'
+
+  # Codificación de los archivos TXT de entrada
+  encoding: "utf-8"
+
+  # Estrategia ante errores de decodificación ('ignore', 'replace', 'strict')
+  encoding_errors: "ignore"
+
+station_files:
+  # Patrón glob para encontrar archivos de estaciones
+  glob_pattern: "*.txt"
+
+  # Extensión a eliminar del nombre de archivo para obtener el ID de estación
+  file_extension: ".txt"
+
+  # Prefijos a eliminar del nombre base para obtener el ID de estación
+  strip_prefixes:
+    - "dia"
+
+variables:
+  # Variables climáticas a procesar (deben coincidir con column_names, excluyendo 'date')
+  expected:
+    - PRECIP
+    - EVAP
+    - TMAX
+    - TMIN
+
+output:
+  # Prefijo del directorio de partición por estación (ej. "estacion" → estacion=25001/)
+  station_partition_prefix: "estacion"
+
+  # Prefijo del directorio de partición por año (ej. "year" → year=2020/)
+  year_partition_prefix: "year"
+
+  # Nombre de la columna de valor en los archivos de salida por variable
+  value_column: "value"
+
+  # Codificación del índice CSV de salida
+  encoding: "utf-8"
+
+index:
+  # Columnas del archivo de índice CSV
+  columns:
+    - station
+    - year
+    - variable
+    - path_parquet
+    - path_csv
+    - rows
+    - missing_pct

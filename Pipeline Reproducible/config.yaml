@@ -1,0 +1,126 @@
+# ============================================================
+# Pipeline Reproducible — RES-33 (subtareas RES-126, RES-127)
+# Configuración de etapas, rutas y artefactos del pipeline
+# end-to-end de imputación hidrometeorológica (CRISP-ML(Q)).
+#
+# Todas las rutas son relativas a la raíz del proyecto.
+# Edita este archivo para adaptar el pipeline sin tocar el script.
+# ============================================================
+
+# ------ Log de ejecución ------------------------------------
+logs:
+  dir: "data/pipeline_logs"
+
+# ------ Etapas del pipeline de datos (automatizadas) --------
+# Cada etapa ejecuta un script Python.
+# Campos:
+#   id           : número de etapa (orden de ejecución)
+#   name         : nombre legible
+#   description  : descripción breve que aparece en consola
+#   type         : "script" (único tipo soportado — los notebooks son manuales)
+#   script       : ruta al script, relativa a la raíz del proyecto
+#   check_output : artefacto que indica que la etapa ya fue completada;
+#                  si existe y no se usa --force, la etapa se omite
+#   post_script  : (opcional) script de verificación que corre después del principal
+stages:
+  - id: 1
+    name: "Descarga de datos crudos"
+    description: "Escanea claves 25001–25300 y descarga archivos .txt desde SMN/CONAGUA (10 hilos)."
+    type: script
+    script: "Obtencion de Datos Crudos/download_sinaloa_raw_pro.py"
+    check_output: "data/raw/conagua_smn/estado=sin/_logs/download_summary.csv"
+
+  - id: 2
+    name: "Estructuración del dataset"
+    description: "Organiza los .txt crudos en particiones parquet por estación/año/variable → data/interim/."
+    type: script
+    script: "Estructuracion del Dataset/organize_raw_by_station_year_variable_parquet.py"
+    check_output: "data/interim/organized/estado=sin/_index.csv"
+
+  - id: 3
+    name: "Limpieza y validación"
+    description: "Aplica límites físicos por variable, elimina duplicados y genera data/cleaned/."
+    type: script
+    script: "Validacion y limpieza/cleaning.py"
+    check_output: "data/cleaned/organized/estado=sin/_index_cleaned.csv"
+
+  - id: 4
+    name: "Normalización y escalamiento"
+    description: "Ajusta scalers globales (MinMax/Standard) y genera data/scaled/ + models/scalers/."
+    type: script
+    script: "Preprocesamiento/normalize.py"
+    check_output: "models/scalers/scaler_precip.pkl"
+
+  - id: 5
+    name: "Dataset final procesado"
+    description: "Consolida particiones escaladas en dataset_final.parquet → data/processed/."
+    type: script
+    script: "Dataset Final Procesado/pipeline.py"
+    check_output: "data/processed/dataset_final.parquet"
+
+  - id: 6
+    name: "División train / val / test"
+    description: "Divide por estación cronológicamente (70/15/15) y verifica ausencia de leakage."
+    type: script
+    script: "División Train-Val-Test/split.py"
+    check_output: "data/splits/train/train.parquet"
+    post_script: "División Train-Val-Test/verify_leakage.py"
+
+  - id: 7
+    name: "Construcción de tensores PyTorch"
+    description: "Genera X, mask, delta y meta tensores (.pt) con ventana de 30 días → data/tensors/."
+    type: script
+    script: "Construcción de Tensores/tensor_builder.py"
+    check_output: "data/tensors/X_train.pt"
+    post_script: "Construcción de Tensores/validate_tensors.py"
+
+  - id: 8
+    name: "Quality Gate CRISP-ML(Q)"
+    description: "Verifica límites físicos, cobertura mínima y estacionariedad del dataset antes de la imputación."
+    type: script
+    script: "Quality Gate/quality_gate.py"
+    check_output: "reports/quality_gate/quality_gate_report.csv"
+
+  - id: 9
+    name: "Imputación generativa (BiGRU-opt)"
+    description: "Aplica el modelo ganador para reconstruir valores faltantes → data/imputed/."
+    type: script
+    script: "Imputación Generativa/impute.py"
+    check_output: "data/imputed/dataset_imputado.parquet"
+
+  - id: 10
+    name: "Validación estadística post-imputación"
+    description: "KS-test, correlaciones inter-variable y métricas de cobertura sobre el dataset imputado."
+    type: script
+    script: "Validación Estadística/validate_imputation.py"
+    check_output: "reports/validacion_estadistica/metricas_imputacion.csv"
+
+  - id: 11
+    name: "Monitoreo del modelo"
+    description: "Detecta drift distribucional (PSI + KS) por ventanas decadales y genera alertas de reentrenamiento."
+    type: script
+    script: "Monitoreo/monitor.py"
+    check_output: "reports/monitoreo/drift_report.csv"
+
+  - id: 12
+    name: "Análisis y exportación"
+    description: "Exporta el dataset imputado final a CSV y genera resumen estadístico en Excel (4 hojas)."
+    type: script
+    script: "Análisis y Exportación/export.py"
+    check_output: "data/export/dataset_imputado.csv"
+
+# ------ Artefactos de modelado (verificación manual) --------
+# Estos artefactos son producidos por los notebooks de experimentación.
+# El pipeline solo verifica que existan; no los genera automáticamente.
+model_artifacts:
+  - name: "Modelos base"
+    path: "reports/modelos_base"
+    notebooks_dir: "Modelos Base"
+
+  - name: "Modelos generativos"
+    path: "reports/modelos_generativos"
+    notebooks_dir: "Modelos Generativos"
+
+  - name: "Modelo ganador (BiGRU-opt)"
+    path: "models/optimizacion/bigru_opt.pt"
+    notebooks_dir: "Optimización"

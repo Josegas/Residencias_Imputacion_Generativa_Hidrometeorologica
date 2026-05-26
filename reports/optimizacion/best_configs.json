@@ -1,0 +1,35 @@
+{
+  "BRITS": {
+    "hidden_size": 64,
+    "lr": 0.00053762515398958,
+    "w_consist": 0.019596828267005262,
+    "w_est": 0.033876889381626245,
+    "batch_size": 128
+  },
+  "SAITS": {
+    "d_model": 128,
+    "n_heads": 8,
+    "n_layers": 3,
+    "lr": 0.0024263282734708707,
+    "dropout": 0.05720580015749266,
+    "w_mit": 1.0047662764411174,
+    "batch_size": 256
+  },
+  "XGBoost": {
+    "n_estimators": 361,
+    "max_depth": 9,
+    "learning_rate": 0.08547646647400851,
+    "subsample": 0.9747893216093166,
+    "colsample_bytree": 0.66534541809846,
+    "min_child_weight": 4,
+    "reg_alpha": 0.0002687937621733976,
+    "reg_lambda": 0.20102616957639588
+  },
+  "BiGRU": {
+    "hidden_size": 128,
+    "n_layers": 2,
+    "lr": 0.0018700782929687888,
+    "dropout": 0.10345035219001798,
+    "batch_size": 128
+  }
+}

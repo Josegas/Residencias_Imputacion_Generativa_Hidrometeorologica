@@ -1,0 +1,15 @@
+criterio,variable,resultado,detalle
+physical_limits,precip,PASS,"n_below=0, n_above=0"
+physical_limits,evap,PASS,"n_below=0, n_above=0"
+physical_limits,tmax,PASS,"n_below=0, n_above=0"
+physical_limits,tmin,PASS,"n_below=0, n_above=0"
+min_valid_obs,all,PASS,estaciones_insuficientes=0
+tmax_gte_tmin_observed,tmax/tmin,PASS,pares_invertidos=0
+missing_rate,precip,PASS,"rate=0.0066, threshold=0.6000"
+missing_rate,evap,PASS,"rate=0.3882, threshold=0.8500"
+missing_rate,tmax,PASS,"rate=0.0700, threshold=0.6000"
+missing_rate,tmin,PASS,"rate=0.0700, threshold=0.6000"
+kpss_stationarity,precip,PASS,"preserved=158, total=173, rate=0.9133"
+kpss_stationarity,evap,WARNING,"preserved=90, total=137, rate=0.6569"
+kpss_stationarity,tmax,WARNING,"preserved=104, total=173, rate=0.6012"
+kpss_stationarity,tmin,PASS,"preserved=146, total=173, rate=0.8439"

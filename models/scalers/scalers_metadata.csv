@@ -1,0 +1,5 @@
+variable,tipo_scaler,pkl,param_min,param_max,param_mean,param_std
+precip,MinMaxScaler,scaler_precip.pkl,0.0,390.5,,
+evap,MinMaxScaler,scaler_evap.pkl,0.01,24.95,,
+tmax,StandardScaler,scaler_tmax.pkl,,,32.681076,4.903075
+tmin,StandardScaler,scaler_tmin.pkl,,,16.710596,6.205145

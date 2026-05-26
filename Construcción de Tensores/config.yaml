@@ -1,0 +1,96 @@
+# ============================================================
+# Construcción de Tensores — RES-29 (subtareas RES-113 a RES-116)
+# Transformación de splits en tensores PyTorch para modelos de
+# imputación generativa de series temporales hidrometeorologicas.
+#
+# Framework elegido: PyTorch
+#   Razón: los modelos objetivo (BRITS, SAITS, CSDI) están
+#   implementados en PyTorch. LSTM/GRU y VAE/Autoencoders también son
+#   compatibles. TensorFlow no tiene soporte oficial de BRITS/CSDI.
+# ============================================================
+
+# ------ Rutas de entrada ------------------------------------
+input:
+  train_parquet: "data/splits/train/train.parquet"
+  val_parquet:   "data/splits/val/val.parquet"
+  test_parquet:  "data/splits/test/test.parquet"
+  variables:     [precip, evap, tmax, tmin]
+  date_col:      date
+  station_col:   estacion
+
+# ------ Generación de secuencias (ventanas temporales) ------
+sequence:
+  # Tamaño de la ventana en número de filas consecutivas.
+  # 30 filas ≈ ventana mensual (datos diarios).
+  # Compatible con BRITS, SAITS (ventana estándar: 48h–30d).
+  window_size: 30
+
+  # Paso entre ventanas. stride=7 (semanal) reduce redundancia
+  # entre secuencias adyacentes y mantiene tamaño de tensor manejable.
+  # Cambiar a stride=1 para máxima cobertura (archivos ~7x más grandes).
+  stride: 7
+
+  # Máximo de días calendario permitidos entre dos filas consecutivas
+  # dentro de una misma ventana. Si la brecha supera este valor la
+  # ventana no se genera (evita cruzar discontinuidades temporales).
+  max_gap_days: 365
+
+# ------ Máscaras de valores faltantes -----------------------
+masks:
+  # Convención de máscara (estándar BRITS / SAITS / CSDI):
+  #   1 = valor observado (no NaN)
+  #   0 = valor faltante  (NaN)
+  observed_value: 1
+  missing_value:  0
+
+  # Calcular delta (días desde la última observación por variable).
+  # Necesario para BRITS. También útil para SAITS y CSDI.
+  compute_delta: true
+
+# ------ Rutas de salida -------------------------------------
+output:
+  tensors_dir: "data/tensors"
+
+  # Tensores de valores (NaN → 0): shape (N, window_size, n_features)
+  X_train:     "data/tensors/X_train.pt"
+  X_val:       "data/tensors/X_val.pt"
+  X_test:      "data/tensors/X_test.pt"
+
+  # Máscaras de observación: shape (N, window_size, n_features)
+  mask_train:  "data/tensors/mask_train.pt"
+  mask_val:    "data/tensors/mask_val.pt"
+  mask_test:   "data/tensors/mask_test.pt"
+
+  # Delta temporal: shape (N, window_size, n_features)
+  delta_train: "data/tensors/delta_train.pt"
+  delta_val:   "data/tensors/delta_val.pt"
+  delta_test:  "data/tensors/delta_test.pt"
+
+  # Metadatos por secuencia: shape (N, 2) — [station_idx, start_date_ordinal]
+  meta_train:  "data/tensors/meta_train.pt"
+  meta_val:    "data/tensors/meta_val.pt"
+  meta_test:   "data/tensors/meta_test.pt"
+
+  # JSON con dimensiones, variables y parámetros de construcción
+  metadata:    "data/tensors/tensors_metadata.json"
+
+  # Reporte CSV con métricas por split
+  report:      "reports/tensor_report.csv"
+
+  # Log de ejecución
+  log_path:    "data/tensors/_logs/tensor_build.log"
+
+# ------ Splits a procesar -----------------------------------
+# Nombres de los subconjuntos. Deben coincidir con las claves
+# "X_<split>", "mask_<split>", etc. definidas en output.
+splits: [train, val, test]
+
+# ------ Validación ------------------------------------------
+validation:
+  # Tamaño de batch usado al probar compatibilidad con DataLoader.
+  batch_size: 32
+
+# ------ Framework y reproducibilidad ------------------------
+framework: "pytorch"
+reproducibility:
+  random_seed: 42

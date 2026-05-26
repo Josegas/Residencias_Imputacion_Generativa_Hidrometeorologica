@@ -1,0 +1,130 @@
+# Configuración del pipeline de dataset final procesado — pipeline.py / validate.py
+# Edita este archivo para adaptar el script a otro estado, fuente o conjunto de variables.
+
+estado: sin
+
+# ─────────────────────────────────────────────────────────────────────
+# Rutas (relativas a PROJECT_ROOT)
+# ─────────────────────────────────────────────────────────────────────
+paths:
+  # Índice de particiones ya escaladas (salida de normalize.py)
+  index_scaled_subpath:
+    - data
+    - scaled
+    - organized
+    - "estado=sin"
+  index_scaled_filename: "_index_scaled.csv"
+
+  # Directorio de salida del dataset final
+  output_subpath:
+    - data
+    - processed
+
+  # Reportes
+  reports_subpath:
+    - reports
+
+  # Logs
+  log_subpath:
+    - data
+    - processed
+    - _logs
+
+  # Scalers (para metadata en reporte)
+  scalers_subpath:
+    - models
+    - scalers
+  scalers_metadata_filename: "scalers_metadata.csv"
+
+# ─────────────────────────────────────────────────────────────────────
+# Nombres de archivos de salida
+# ─────────────────────────────────────────────────────────────────────
+output:
+  # Índice de los archivos generados
+  index_filename: "_index_processed.csv"
+
+  # Dataset consolidado (todas las estaciones en un solo archivo)
+  master_parquet_filename: "dataset_final.parquet"
+  master_csv_filename: "dataset_final.csv"
+
+  # Reportes
+  pipeline_report_filename: "pipeline_report.csv"
+  validation_report_filename: "validation_report.csv"
+
+  # Logs
+  pipeline_log_filename: "pipeline_run.log"
+  validation_log_filename: "validation_run.log"
+
+  # Subdirectorios de salida por formato
+  parquet_subdir: "parquet"
+  csv_subdir: "csv"
+
+  # Prefijo para archivos por estación
+  station_file_prefix: "estacion="
+
+  # Zero-padding del ID de estación
+  station_id_zfill: 5
+
+  # Nombre de la columna de valor en los parquets de entrada (scaled)
+  value_column: "value"
+
+  # Nombre de la columna de identificador de estación en el dataset consolidado
+  station_col: "estacion"
+
+  # Cada cuántas estaciones imprimir progreso en el log
+  progress_log_interval: 20
+
+# ─────────────────────────────────────────────────────────────────────
+# Variables hidrometeorológicas (orden define columnas en archivo final)
+# ─────────────────────────────────────────────────────────────────────
+variables:
+  - precip
+  - evap
+  - tmax
+  - tmin
+
+# ─────────────────────────────────────────────────────────────────────
+# Rangos esperados en datos escalados — usados por validate.py
+#
+# MinMaxScaler  → [0, 1]   (precip, evap)
+# StandardScaler → ~[-5, 5] (~5σ cubre cualquier valor físico real)
+#
+# Fuera de estos rangos indica problema en el pipeline de escalamiento.
+# ─────────────────────────────────────────────────────────────────────
+validation:
+  scaled_ranges:
+    precip:
+      min: 0.0
+      max: 1.0
+      scaler: "MinMaxScaler"
+    evap:
+      min: 0.0
+      max: 1.0
+      scaler: "MinMaxScaler"
+    tmax:
+      min: -6.0
+      max: 6.0
+      scaler: "StandardScaler"
+    tmin:
+      min: -6.0
+      max: 6.0
+      scaler: "StandardScaler"
+
+  # Mínimo de registros para que una estación sea considerada válida
+  min_rows_per_station: 365
+
+  # Porcentaje máximo de missing tolerado (se reporta, no se filtra)
+  max_missing_pct_warning: 50.0
+
+# ─────────────────────────────────────────────────────────────────────
+# Segmentos de ruta usados para reconstruir paths si el proyecto
+# fue movido de directorio — mismo patrón que cleaning.py / normalize.py
+# ─────────────────────────────────────────────────────────────────────
+path_segments:
+  data: "data"
+
+# ─────────────────────────────────────────────────────────────────────
+# Reproducibilidad
+# ─────────────────────────────────────────────────────────────────────
+reproducibility:
+  random_seed: 42

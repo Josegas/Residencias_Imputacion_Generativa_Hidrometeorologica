@@ -1,0 +1,5 @@
+modelo,variable,stat_orig,p_orig,stat_imp,p_imp,preserva_estacionariedad
+Autoencoder,precip,0.2287,0.1,0.1491,0.1,True
+Autoencoder,evap,0.1772,0.1,0.1306,0.1,True
+Autoencoder,tmax,0.4415,0.0593,0.4095,0.0731,True
+Autoencoder,tmin,0.1453,0.1,0.1406,0.1,True

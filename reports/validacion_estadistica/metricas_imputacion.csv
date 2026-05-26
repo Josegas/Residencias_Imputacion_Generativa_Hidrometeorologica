@@ -1,0 +1,5 @@
+variable,estacion,nan_original,nan_rellenados,nan_residual,tasa_cobertura
+precip,_GLOBAL_,10687,10641,46,0.9957
+evap,_GLOBAL_,627203,626314,889,0.9986
+tmax,_GLOBAL_,113178,112959,219,0.9981
+tmin,_GLOBAL_,113178,112959,219,0.9981

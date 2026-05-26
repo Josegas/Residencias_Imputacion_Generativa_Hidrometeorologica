@@ -1,0 +1,403 @@
+<mxGraphModel dx="1422" dy="762" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2080" pageHeight="910" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- ===== TITULO GENERAL ===== -->
+    <mxCell id="title" value="&lt;font style=&quot;font-size:15px;&quot;&gt;&lt;b&gt;HydroImpute — Aplicacion Web (Streamlit)&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:10px;color:#555555;&quot;&gt;Flujo de uso: (1) Dashboard — monitoreo del pipeline · (2) Pipeline — ejecucion de etapas · (3) Imputar — carga de datos y descarga del resultado&lt;/font&gt;"
+      style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="30" y="10" width="2020" height="42" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!--  PANTALLA 1 — DASHBOARD  (x=30)                                  -->
+    <!-- ================================================================ -->
+
+    <mxCell id="p1_chrome" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;strokeWidth=2;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="30" y="62" width="640" height="820" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_bar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cfd8dc;strokeColor=#90a4ae;" vertex="1" parent="1">
+      <mxGeometry x="30" y="62" width="640" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_btns" value="o  o  o" style="text;html=1;align=left;fontSize=10;fontColor=#78909c;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="30" y="65" width="70" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_url" value="http://localhost:8501  —  Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b0bec5;fontSize=9;align=left;spacingLeft=6;" vertex="1" parent="1">
+      <mxGeometry x="108" y="68" width="452" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Sidebar 1 -->
+    <mxCell id="p1_sb" value="" style="rounded=0;fillColor=#1e3a5f;strokeColor=#1e3a5f;" vertex="1" parent="1">
+      <mxGeometry x="30" y="94" width="162" height="788" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_logo" value="&lt;font style=&quot;font-size:13px;color:#ffffff;&quot;&gt;&lt;b&gt;HydroImpute&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:8px;color:#90caf9;&quot;&gt;BiGRU-opt · Sinaloa&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="30" y="100" width="162" height="46" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_sep" value="" style="line;strokeColor=#3a6a9f;" vertex="1" parent="1">
+      <mxGeometry x="40" y="146" width="142" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_n0" value="[I]   Inicio" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="30" y="154" width="162" height="28" as="geometry" />
+    </mxCell>
+    <!-- activo -->
+    <mxCell id="p1_n1a" value="" style="rounded=0;fillColor=#2563a8;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="30" y="182" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_n1" value="[D]  Dashboard" style="text;html=1;align=left;fontSize=10;fontColor=#ffffff;fontStyle=1;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="30" y="182" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_n2" value="[P]   Pipeline" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="30" y="210" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_n3" value="[Im] Imputar" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="30" y="238" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_n4" value="[R]  Resultados" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="30" y="266" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_n5" value="[C]  Configuracion" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="30" y="294" width="162" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- Main 1 -->
+    <mxCell id="p1_main" value="" style="rounded=0;fillColor=#f8f9fa;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="192" y="94" width="478" height="788" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_title" value="&lt;b&gt;Dashboard — Estado del Pipeline&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;fontColor=#1e3a5f;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="192" y="102" width="464" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_sub" value="Ultima ejecucion: 2026-05-19  10:42:33   |   Semilla: 42   |   Modelo: BIGRU-OPT" style="text;html=1;align=left;fontSize=8;fontColor=#607d8b;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="192" y="126" width="464" height="16" as="geometry" />
+    </mxCell>
+
+    <!-- KPIs -->
+    <mxCell id="kpi1" value="&lt;font style=&quot;font-size:18px;color:#1e3a5f;&quot;&gt;&lt;b&gt;0.621&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;color:#607d8b;&quot;&gt;NSE global&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#90caf9;shadow=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="200" y="148" width="100" height="52" as="geometry" />
+    </mxCell>
+    <mxCell id="kpi2" value="&lt;font style=&quot;font-size:18px;color:#1e3a5f;&quot;&gt;&lt;b&gt;173&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;color:#607d8b;&quot;&gt;Estaciones&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#90caf9;shadow=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="310" y="148" width="100" height="52" as="geometry" />
+    </mxCell>
+    <mxCell id="kpi3" value="&lt;font style=&quot;font-size:18px;color:#1e3a5f;&quot;&gt;&lt;b&gt;4&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;color:#607d8b;&quot;&gt;Variables&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#90caf9;shadow=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="420" y="148" width="100" height="52" as="geometry" />
+    </mxCell>
+    <mxCell id="kpi4" value="&lt;font style=&quot;font-size:18px;color:#2e7d32;&quot;&gt;&lt;b&gt;PASS&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:9px;color:#607d8b;&quot;&gt;Quality Gate&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#a5d6a7;shadow=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="530" y="148" width="100" height="52" as="geometry" />
+    </mxCell>
+
+    <!-- Tabla etapas -->
+    <mxCell id="p1_tbl_title" value="&lt;b&gt;Estado de las 12 Etapas&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;fontColor=#1e3a5f;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="192" y="210" width="464" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_th" value="" style="rounded=0;fillColor=#1e3a5f;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="200" y="232" width="460" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_th_txt" value="&lt;font color=&quot;#ffffff&quot;&gt;  #    Etapa                                  Estado      Tiempo&lt;/font&gt;" style="text;html=1;align=left;fontSize=8;spacingLeft=2;" vertex="1" parent="1">
+      <mxGeometry x="200" y="232" width="460" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- filas etapas 1-12 -->
+    <mxCell id="r1"  value="" style="rounded=0;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="252" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r1t" value="  1   Descarga datos CONAGUA                [OK] PASS   0:03:12" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="252" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r2"  value="" style="rounded=0;fillColor=#f5f5f5;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="271" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r2t" value="  2   Estructuracion del dataset (Parquet)  [OK] PASS   0:01:47" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="271" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r3"  value="" style="rounded=0;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="290" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r3t" value="  3   Limpieza y validacion fisica          [OK] PASS   0:02:05" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="290" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r4"  value="" style="rounded=0;fillColor=#f5f5f5;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="309" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r4t" value="  4   Normalizacion y escalamiento          [OK] PASS   0:01:22" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="309" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r5"  value="" style="rounded=0;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="328" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r5t" value="  5   Dataset final procesado               [OK] PASS   0:00:48" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="328" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r6"  value="" style="rounded=0;fillColor=#f5f5f5;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="347" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r6t" value="  6   Division train / val / test           [OK] PASS   0:00:31" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="347" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r7"  value="" style="rounded=0;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="366" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r7t" value="  7   Construccion de tensores PyTorch      [OK] PASS   0:04:18" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="366" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r8"  value="" style="rounded=0;fillColor=#f5f5f5;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="385" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r8t" value="  8   Quality Gate CRISP-ML(Q)              [OK] PASS   0:00:55" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="385" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r9"  value="" style="rounded=0;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="404" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r9t" value="  9   Imputacion generativa BiGRU-opt       [OK] PASS   0:07:44" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="404" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r10"  value="" style="rounded=0;fillColor=#f5f5f5;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="423" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r10t" value="  10  Validacion estadistica post-imp.      [OK] PASS   0:01:03" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="423" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r11"  value="" style="rounded=0;fillColor=#fff8e1;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="442" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r11t" value="  11  Monitoreo de drift distribucional     [!] WARN    0:00:49" style="text;html=1;align=left;fontSize=8;fontColor=#e65100;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="442" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r12"  value="" style="rounded=0;fillColor=#f5f5f5;strokeColor=#e0e0e0;strokeWidth=0.5;" vertex="1" parent="1"><mxGeometry x="200" y="461" width="460" height="19" as="geometry"/></mxCell>
+    <mxCell id="r12t" value="  12  Analisis y exportacion               [OK] PASS   0:00:37" style="text;html=1;align=left;fontSize=8;fontColor=#2e7d32;spacingLeft=2;" vertex="1" parent="1"><mxGeometry x="200" y="461" width="460" height="19" as="geometry"/></mxCell>
+
+    <!-- Alerta PSI -->
+    <mxCell id="p1_alert" value="" style="rounded=1;fillColor=#fff8e1;strokeColor=#ffa000;strokeWidth=2;" vertex="1" parent="1">
+      <mxGeometry x="200" y="492" width="460" height="52" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_alert_txt" value="[!] &lt;b&gt;Alerta PSI — Etapa 11:&lt;/b&gt; PSI(precip, ventana 2010-2019) = 0.13 &gt; umbral_warning (0.10).&lt;br/&gt;Senal de cambio climatico detectada. No requiere reentrenamiento (PSI &lt; 0.20)." style="text;html=1;align=left;fontSize=9;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="200" y="492" width="460" height="52" as="geometry" />
+    </mxCell>
+
+    <!-- Ultimo log -->
+    <mxCell id="p1_log_title" value="&lt;b&gt;Ultimo log de ejecucion&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontColor=#1e3a5f;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="192" y="554" width="464" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_log_bg" value="" style="rounded=1;fillColor=#1a1a2e;strokeColor=#333366;" vertex="1" parent="1">
+      <mxGeometry x="200" y="574" width="460" height="118" as="geometry" />
+    </mxCell>
+    <mxCell id="p1_log_txt" value="&lt;font color=&quot;#a0d0a0&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[10:42:01] Pipeline iniciado · semilla=42&lt;br/&gt;[10:42:01] Etapa 1 — Descarga datos CONAGUA...&lt;br/&gt;[10:45:13] [OK] Etapa 1 completada (3m 12s)&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#ffd080&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[10:52:02] [!] Etapa 11 — PSI(precip)=0.13 &gt; 0.10&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#a0d0a0&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[10:52:02] Etapa 11 completada con WARNING&lt;br/&gt;[10:52:51] Etapa 12 completada · pipeline PASS&lt;br/&gt;[10:52:51] Artefactos en data/export/  OK&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+      <mxGeometry x="200" y="574" width="460" height="118" as="geometry" />
+    </mxCell>
+
+    <!-- etiqueta externa pantalla 1 -->
+    <mxCell id="lbl1" value="&lt;b&gt;(1) Dashboard&lt;/b&gt;" style="text;html=1;align=center;fontSize=11;fontColor=#1e3a5f;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="30" y="886" width="640" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!--  PANTALLA 2 — PIPELINE  (x=700)                                  -->
+    <!-- ================================================================ -->
+
+    <mxCell id="p2_chrome" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;strokeWidth=2;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="700" y="62" width="640" height="820" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_bar" value="" style="rounded=0;fillColor=#cfd8dc;strokeColor=#90a4ae;" vertex="1" parent="1">
+      <mxGeometry x="700" y="62" width="640" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_btns" value="o  o  o" style="text;html=1;align=left;fontSize=10;fontColor=#78909c;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="700" y="65" width="70" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_url" value="http://localhost:8501/Pipeline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b0bec5;fontSize=9;align=left;spacingLeft=6;" vertex="1" parent="1">
+      <mxGeometry x="778" y="68" width="452" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Sidebar 2 -->
+    <mxCell id="p2_sb" value="" style="rounded=0;fillColor=#1e3a5f;strokeColor=#1e3a5f;" vertex="1" parent="1">
+      <mxGeometry x="700" y="94" width="162" height="788" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_logo" value="&lt;font style=&quot;font-size:13px;color:#ffffff;&quot;&gt;&lt;b&gt;HydroImpute&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:8px;color:#90caf9;&quot;&gt;BiGRU-opt · Sinaloa&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="700" y="100" width="162" height="46" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_sep" value="" style="line;strokeColor=#3a6a9f;" vertex="1" parent="1">
+      <mxGeometry x="710" y="146" width="142" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_n0" value="[I]   Inicio" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="700" y="154" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_n1" value="[D]  Dashboard" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="700" y="182" width="162" height="28" as="geometry" />
+    </mxCell>
+    <!-- activo -->
+    <mxCell id="p2_n2a" value="" style="rounded=0;fillColor=#2563a8;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="700" y="210" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_n2" value="[P]   Pipeline" style="text;html=1;align=left;fontSize=10;fontColor=#ffffff;fontStyle=1;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="700" y="210" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_n3" value="[Im] Imputar" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="700" y="238" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_n4" value="[R]  Resultados" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="700" y="266" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_n5" value="[C]  Configuracion" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="700" y="294" width="162" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- Main 2 -->
+    <mxCell id="p2_main" value="" style="rounded=0;fillColor=#f8f9fa;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="862" y="94" width="478" height="788" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_title" value="&lt;b&gt;Pipeline — Ejecutar etapas&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;fontColor=#1e3a5f;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="862" y="102" width="464" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_sub" value="Selecciona el modo de ejecucion y monitorea el log en tiempo real." style="text;html=1;align=left;fontSize=8;fontColor=#607d8b;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="862" y="126" width="464" height="16" as="geometry" />
+    </mxCell>
+
+    <!-- Modo de ejecucion -->
+    <mxCell id="p2_mode_bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#90caf9;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="870" y="150" width="460" height="110" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_mode_title" value="&lt;b&gt;Modo de ejecucion&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontColor=#1e3a5f;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="870" y="154" width="460" height="20" as="geometry" />
+    </mxCell>
+    <!-- radio buttons simulados -->
+    <mxCell id="p2_r1" value="(x)  Ejecutar todo el pipeline (Etapas 1 - 12)" style="text;html=1;align=left;fontSize=10;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="870" y="174" width="460" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_r2" value="( )  Ejecutar desde la etapa N" style="text;html=1;align=left;fontSize=10;fontColor=#9e9e9e;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="870" y="196" width="460" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_r3" value="( )  Ejecutar solo la etapa N" style="text;html=1;align=left;fontSize=10;fontColor=#9e9e9e;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="870" y="218" width="460" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_chk" value="[ ]  Forzar re-ejecucion (--force, sobreescribe artefactos existentes)" style="text;html=1;align=left;fontSize=10;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="870" y="240" width="460" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Boton ejecutar -->
+    <mxCell id="p2_btn" value="Ejecutar pipeline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#1e3a5f;fontColor=#ffffff;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="870" y="272" width="460" height="38" as="geometry" />
+    </mxCell>
+
+    <!-- Log en tiempo real -->
+    <mxCell id="p2_log_hdr" value="" style="rounded=0;fillColor=#2d2d2d;strokeColor=#444444;" vertex="1" parent="1">
+      <mxGeometry x="870" y="322" width="460" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_log_hdr_txt" value="&lt;font color=&quot;#cccccc&quot; style=&quot;font-family:monospace;font-size:9px;&quot;&gt;  Log de ejecucion — transmision en tiempo real&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="870" y="322" width="460" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_log" value="" style="rounded=0;fillColor=#1a1a2e;strokeColor=#333366;" vertex="1" parent="1">
+      <mxGeometry x="870" y="348" width="460" height="390" as="geometry" />
+    </mxCell>
+    <mxCell id="p2_log_txt" value="&lt;font color=&quot;#888888&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;$ python &quot;Pipeline Reproducible/run_pipeline.py&quot;&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#a0d0a0&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;&lt;br/&gt;[10:42:01] Pipeline iniciado · semilla=42 · version=1.4.2&lt;br/&gt;[10:42:01] ----------------------------------------&lt;br/&gt;[10:42:01] Etapa 1 — Descarga datos CONAGUA&lt;br/&gt;[10:42:04]   Encontradas 173 estaciones activas&lt;br/&gt;[10:42:04]   Descargando estacion 25001 ...&lt;br/&gt;[10:44:59]   Descarga completa: 173/173 estaciones&lt;br/&gt;[10:45:13] [OK] Etapa 1 completada en 3m 12s&lt;br/&gt;[10:45:13] ----------------------------------------&lt;br/&gt;[10:45:13] Etapa 2 — Estructuracion del dataset&lt;br/&gt;[10:45:14]   Procesando 168 archivos .txt ...&lt;br/&gt;[10:47:00]   _index.csv generado: 47,124 particiones&lt;br/&gt;[10:47:00] [OK] Etapa 2 completada en 1m 47s&lt;br/&gt;[10:47:00] ----------------------------------------&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#606090&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[...] Etapas 3 - 10 completadas sin errores&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#a0d0a0&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[10:52:00] ----------------------------------------&lt;br/&gt;[10:52:00] Etapa 11 — Monitoreo de drift&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#ffd080&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[10:52:02] [!] WARNING: PSI(precip)=0.13 &gt; 0.10&lt;br/&gt;[10:52:02]     Ventana 2010-2019 vs referencia 1970-2000&lt;br/&gt;&lt;/font&gt;&lt;font color=&quot;#a0d0a0&quot; style=&quot;font-family:monospace;font-size:8px;&quot;&gt;[10:52:51] [OK] Etapa 12 completada en 0m 37s&lt;br/&gt;[10:52:51] ========================================&lt;br/&gt;[10:52:51] Pipeline finalizado: PASS (1 WARNING)&lt;br/&gt;[10:52:51] Artefactos en: data/export/&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+      <mxGeometry x="870" y="348" width="460" height="390" as="geometry" />
+    </mxCell>
+
+    <mxCell id="lbl2" value="&lt;b&gt;(2) Pipeline&lt;/b&gt;" style="text;html=1;align=center;fontSize=11;fontColor=#1e3a5f;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="700" y="886" width="640" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- ================================================================ -->
+    <!--  PANTALLA 3 — IMPUTAR  (x=1370)                                  -->
+    <!-- ================================================================ -->
+
+    <mxCell id="p3_chrome" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;strokeColor=#90a4ae;strokeWidth=2;arcSize=2;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="62" width="640" height="820" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_bar" value="" style="rounded=0;fillColor=#cfd8dc;strokeColor=#90a4ae;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="62" width="640" height="32" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_btns" value="o  o  o" style="text;html=1;align=left;fontSize=10;fontColor=#78909c;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="65" width="70" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_url" value="http://localhost:8501/Imputar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b0bec5;fontSize=9;align=left;spacingLeft=6;" vertex="1" parent="1">
+      <mxGeometry x="1448" y="68" width="452" height="20" as="geometry" />
+    </mxCell>
+
+    <!-- Sidebar 3 -->
+    <mxCell id="p3_sb" value="" style="rounded=0;fillColor=#1e3a5f;strokeColor=#1e3a5f;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="94" width="162" height="788" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_logo" value="&lt;font style=&quot;font-size:13px;color:#ffffff;&quot;&gt;&lt;b&gt;HydroImpute&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;&lt;font style=&quot;font-size:8px;color:#90caf9;&quot;&gt;BiGRU-opt · Sinaloa&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="100" width="162" height="46" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_sep" value="" style="line;strokeColor=#3a6a9f;" vertex="1" parent="1">
+      <mxGeometry x="1380" y="146" width="142" height="8" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_n0" value="[I]   Inicio" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="154" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_n1" value="[D]  Dashboard" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="182" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_n2" value="[P]   Pipeline" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="210" width="162" height="28" as="geometry" />
+    </mxCell>
+    <!-- activo -->
+    <mxCell id="p3_n3a" value="" style="rounded=0;fillColor=#2563a8;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="238" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_n3" value="[Im] Imputar" style="text;html=1;align=left;fontSize=10;fontColor=#ffffff;fontStyle=1;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="238" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_n4" value="[R]  Resultados" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="266" width="162" height="28" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_n5" value="[C]  Configuracion" style="text;html=1;align=left;fontSize=10;fontColor=#b0bec5;spacingLeft=14;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="294" width="162" height="28" as="geometry" />
+    </mxCell>
+
+    <!-- Main 3 -->
+    <mxCell id="p3_main" value="" style="rounded=0;fillColor=#f8f9fa;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1532" y="94" width="478" height="788" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_title" value="&lt;b&gt;Imputar — Cargar y procesar datos&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;fontColor=#1e3a5f;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="1532" y="102" width="464" height="26" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_sub" value="Carga tu archivo y BiGRU-opt completara los valores faltantes." style="text;html=1;align=left;fontSize=8;fontColor=#607d8b;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="1532" y="126" width="464" height="16" as="geometry" />
+    </mxCell>
+
+    <!-- Paso 1: cargar -->
+    <mxCell id="p3_s1" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#90caf9;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="148" width="460" height="82" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_s1t" value="&lt;b&gt;1. Cargar archivo&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontColor=#1e3a5f;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="152" width="460" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_drop" value="Arrastra tu archivo aqui o haz clic para seleccionar&lt;br/&gt;&lt;font style=&quot;font-size:8px;color:#90a4ae;&quot;&gt;Formatos: CSV, Excel (.xlsx), Parquet&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#90caf9;dashed=1;dashPattern=6 4;fontSize=10;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="174" width="444" height="48" as="geometry" />
+    </mxCell>
+
+    <!-- Paso 2: preview -->
+    <mxCell id="p3_s2" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#90caf9;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="242" width="460" height="108" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_s2t" value="&lt;b&gt;2. Vista previa (5 filas) — NaN en rojo&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontColor=#1e3a5f;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="246" width="460" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_th2" value="" style="rounded=0;fillColor=#1e3a5f;strokeColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="266" width="444" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_th2t" value="&lt;font color=&quot;#ffffff&quot;&gt;  estacion     date         precip   evap   tmax   tmin&lt;/font&gt;" style="text;html=1;align=left;fontSize=8;spacingLeft=2;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="266" width="444" height="18" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_tr1" value="  25001   1985-07-15     &lt;font color=&quot;#c62828&quot;&gt;NaN    NaN&lt;/font&gt;   38.2   24.1" style="text;html=1;align=left;fontSize=8;spacingLeft=2;fillColor=#ffffff;strokeColor=#e0e0e0;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="284" width="444" height="17" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_tr2" value="  25001   1985-07-16      2.4   &lt;font color=&quot;#c62828&quot;&gt;NaN&lt;/font&gt;   37.8   23.9" style="text;html=1;align=left;fontSize=8;spacingLeft=2;fillColor=#f5f5f5;strokeColor=#e0e0e0;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="301" width="444" height="17" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_tr3" value="  25001   1985-07-17      0.0    5.1   36.5   22.7" style="text;html=1;align=left;fontSize=8;spacingLeft=2;fillColor=#ffffff;strokeColor=#e0e0e0;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="318" width="444" height="17" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_stat" value="7,320 filas · 3 estaciones · &lt;font color=&quot;#c62828&quot;&gt;NaN: precip 14.2 %  evap 38.9 %  tmax 11.5 %  tmin 11.5 %&lt;/font&gt;" style="text;html=1;align=left;fontSize=8;spacingLeft=4;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="336" width="460" height="14" as="geometry" />
+    </mxCell>
+
+    <!-- Paso 3: limites fisicos -->
+    <mxCell id="p3_s3" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#90caf9;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="360" width="460" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_s3t" value="&lt;b&gt;3. Limites fisicos (editables)&lt;/b&gt;" style="text;html=1;align=left;fontSize=10;fontColor=#1e3a5f;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="364" width="460" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="l1" value="precip   min: &lt;b&gt;0.0&lt;/b&gt;   max: &lt;b&gt;500.0&lt;/b&gt; mm" style="text;html=1;align=left;fontSize=10;spacingLeft=14;" vertex="1" parent="1"><mxGeometry x="1540" y="384" width="230" height="20" as="geometry"/></mxCell>
+    <mxCell id="l2" value="evap     min: &lt;b&gt;0.0&lt;/b&gt;   max: &lt;b&gt;60.0&lt;/b&gt; mm" style="text;html=1;align=left;fontSize=10;spacingLeft=14;" vertex="1" parent="1"><mxGeometry x="1540" y="404" width="230" height="20" as="geometry"/></mxCell>
+    <mxCell id="l3" value="tmax    min: &lt;b&gt;-5.0&lt;/b&gt;   max: &lt;b&gt;55.0&lt;/b&gt; C" style="text;html=1;align=left;fontSize=10;spacingLeft=14;" vertex="1" parent="1"><mxGeometry x="1540" y="424" width="230" height="20" as="geometry"/></mxCell>
+    <mxCell id="l4" value="tmin    min: &lt;b&gt;-15.0&lt;/b&gt;  max: &lt;b&gt;45.0&lt;/b&gt; C" style="text;html=1;align=left;fontSize=10;spacingLeft=14;" vertex="1" parent="1"><mxGeometry x="1540" y="444" width="230" height="20" as="geometry"/></mxCell>
+    <mxCell id="ch1" value="[x]  Restriccion tmax &gt;= tmin" style="text;html=1;align=left;fontSize=10;spacingLeft=14;" vertex="1" parent="1"><mxGeometry x="1540" y="464" width="460" height="18" as="geometry"/></mxCell>
+    <mxCell id="ch2" value="[x]  Preservar valores observados originales" style="text;html=1;align=left;fontSize=10;spacingLeft=14;" vertex="1" parent="1"><mxGeometry x="1540" y="482" width="460" height="18" as="geometry"/></mxCell>
+
+    <!-- Boton ejecutar -->
+    <mxCell id="p3_btn" value="Ejecutar imputacion con BiGRU-opt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a5f;strokeColor=#1e3a5f;fontColor=#ffffff;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="502" width="460" height="38" as="geometry" />
+    </mxCell>
+
+    <!-- Resultado -->
+    <mxCell id="p3_res" value="" style="rounded=1;fillColor=#e8f5e9;strokeColor=#2e7d32;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="552" width="460" height="130" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_res_t" value="[OK]  &lt;b&gt;Imputacion completada&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;fontColor=#1b5e20;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="556" width="460" height="22" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_res_s" value="NaN imputados:  precip 1,248 · evap 3,704 · tmax 847 · tmin 847&lt;br/&gt;Cobertura: 99.8 %  ·  Tiempo de inferencia: 8.3 s&lt;br/&gt;Modelo: BIGRU-OPT  ·  Dispositivo: CPU  ·  Semilla: 42" style="text;html=1;align=left;fontSize=9;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1540" y="578" width="460" height="56" as="geometry" />
+    </mxCell>
+    <mxCell id="p3_dl" value="Descargar dataset imputado (.csv)" style="rounded=1;fillColor=#2e7d32;strokeColor=#2e7d32;fontColor=#ffffff;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
+      <mxGeometry x="1548" y="638" width="444" height="34" as="geometry" />
+    </mxCell>
+
+    <mxCell id="lbl3" value="&lt;b&gt;(3) Imputar&lt;/b&gt;" style="text;html=1;align=center;fontSize=11;fontColor=#1e3a5f;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="1370" y="886" width="640" height="22" as="geometry" />
+    </mxCell>
+
+    <!-- Flechas de flujo entre pantallas -->
+    <mxCell id="arr12" value="flujo de uso" style="endArrow=block;endFill=1;html=1;strokeColor=#1e3a5f;strokeWidth=2;fontSize=9;fontColor=#1e3a5f;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="670" y="474" as="sourcePoint"/>
+        <mxPoint x="700" y="474" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="arr23" value="flujo de uso" style="endArrow=block;endFill=1;html=1;strokeColor=#1e3a5f;strokeWidth=2;fontSize=9;fontColor=#1e3a5f;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1340" y="474" as="sourcePoint"/>
+        <mxPoint x="1370" y="474" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

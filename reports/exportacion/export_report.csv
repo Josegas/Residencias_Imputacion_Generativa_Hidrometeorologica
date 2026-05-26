@@ -1,0 +1,9 @@
+artefacto,ruta,filas,columnas,tamano_mb,descripcion
+dataset_imputado.csv,data/export/dataset_imputado.csv,1615838.0,6.0,67.73,Dataset imputado completo
+resumen_estadistico.xlsx,data/export/resumen_estadistico.xlsx,,,0.048,Estadísticas resumidas — 4 hojas
+variable:precip,,1615792.0,,,Valores válidos en dataset final
+variable:evap,,1614949.0,,,Valores válidos en dataset final
+variable:tmax,,1615619.0,,,Valores válidos en dataset final
+variable:tmin,,1615619.0,,,Valores válidos en dataset final
+timestamp,,,,,2026-05-24 19:46:51
+por_estacion/ (173 archivos),data/export/por_estacion,1615838.0,5.0,58.5,Un CSV por estación — convención estacion=XXXXX.csv

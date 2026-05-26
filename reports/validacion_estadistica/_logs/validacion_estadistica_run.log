@@ -1,0 +1,62 @@
+2026-05-24 19:45:30,425  INFO      ============================================================
+2026-05-24 19:45:30,425  INFO      INICIO — Validación Estadística post-imputación
+2026-05-24 19:45:30,425  INFO      ============================================================
+2026-05-24 19:45:30,612  INFO      Dataset original : data/processed/dataset_final.parquet  (1,615,838 filas)
+2026-05-24 19:45:30,612  INFO      Dataset imputado : data/imputed/dataset_imputado.parquet  (1,615,838 filas)
+2026-05-24 19:45:30,657  INFO      Scalers cargados para inverse-transform: ['precip', 'evap', 'tmax', 'tmin']
+2026-05-24 19:45:30,727  INFO      ----------------------------------------
+2026-05-24 19:45:30,727  INFO      Cobertura de imputación
+2026-05-24 19:45:30,727  INFO      ----------------------------------------
+2026-05-24 19:45:30,731  INFO        precip:   10,687 NaN originales →       46 residuales  (10,641 rellenados, 99.6%)
+2026-05-24 19:45:30,734  INFO        evap  :  627,203 NaN originales →      889 residuales  (626,314 rellenados, 99.9%)
+2026-05-24 19:45:30,736  INFO        tmax  :  113,178 NaN originales →      219 residuales  (112,959 rellenados, 99.8%)
+2026-05-24 19:45:30,739  INFO        tmin  :  113,178 NaN originales →      219 residuales  (112,959 rellenados, 99.8%)
+2026-05-24 19:45:30,741  INFO      ----------------------------------------
+2026-05-24 19:45:30,741  INFO      KS-test: distribución observada vs. imputada
+2026-05-24 19:45:30,741  INFO      ----------------------------------------
+2026-05-24 19:45:30,830  INFO        [WARNING] KS-test precip: D=0.7733, p=0.0000 (distribución distinta)
+2026-05-24 19:45:30,927  INFO        [WARNING] KS-test evap: D=0.3444, p=0.0000 (distribución distinta)
+2026-05-24 19:45:31,013  INFO        [WARNING] KS-test tmax: D=0.5840, p=0.0000 (distribución distinta)
+2026-05-24 19:45:31,099  INFO        [WARNING] KS-test tmin: D=0.4689, p=0.0000 (distribución distinta)
+2026-05-24 19:45:31,100  INFO      ----------------------------------------
+2026-05-24 19:45:31,100  INFO      Correlaciones inter-variable antes/después
+2026-05-24 19:45:31,100  INFO      ----------------------------------------
+2026-05-24 19:45:31,148  INFO        corr(precip,evap): antes=-0.0112  después=-0.0436  Δ=-0.0325
+2026-05-24 19:45:31,194  INFO        corr(precip,tmax): antes=-0.0189  después=-0.0213  Δ=-0.0024
+2026-05-24 19:45:31,241  INFO        corr(precip,tmin): antes=0.1690  después=0.1636  Δ=-0.0054
+2026-05-24 19:45:31,292  INFO        corr(evap,tmax): antes=0.5712  después=0.5511  Δ=-0.0201
+2026-05-24 19:45:31,340  INFO        corr(evap,tmin): antes=0.2924  después=0.2462  Δ=-0.0461
+2026-05-24 19:45:31,397  INFO        corr(tmax,tmin): antes=0.5247  después=0.5250  Δ=+0.0003
+2026-05-24 19:45:31,398  INFO      ----------------------------------------
+2026-05-24 19:45:31,398  INFO      Generando figuras
+2026-05-24 19:45:31,398  INFO      ----------------------------------------
+2026-05-24 19:45:31,486  INFO        figura: reports/validacion_estadistica/figuras/val_cobertura.png
+2026-05-24 19:46:34,002  INFO        figura: reports/validacion_estadistica/figuras/val_distribucion.png
+2026-05-24 19:46:34,087  INFO        figura: reports/validacion_estadistica/figuras/val_correlaciones.png
+2026-05-24 19:46:34,153  INFO        figura: reports/validacion_estadistica/figuras/val_ks_test.png
+2026-05-24 19:46:34,153  INFO      ----------------------------------------
+2026-05-24 19:46:34,153  INFO      Estadísticos descriptivos antes/después
+2026-05-24 19:46:34,153  INFO      ----------------------------------------
+2026-05-24 19:46:34,185  INFO        precip: mean 1.957→1.959  std 8.797→8.770  min 0.000→0.000  max 390.500→390.500
+2026-05-24 19:46:34,223  INFO        evap  : mean 5.279→5.328  std 2.551→2.065  min 0.010→0.000  max 24.950→24.950
+2026-05-24 19:46:34,257  INFO        tmax  : mean 32.681→32.576  std 4.903→4.752  min 2.500→2.500  max 55.000→55.000
+2026-05-24 19:46:34,292  INFO        tmin  : mean 16.711→16.658  std 6.205→5.997  min -10.000→-10.000  max 37.000→37.000
+2026-05-24 19:46:34,307  INFO      ----------------------------------------
+2026-05-24 19:46:34,307  INFO      Criterios CRÍTICOS post-imputación
+2026-05-24 19:46:34,307  INFO      ----------------------------------------
+2026-05-24 19:46:34,320  INFO      [OK]      physical_limits post-imputación precip: sin violaciones
+2026-05-24 19:46:34,337  INFO      [OK]      physical_limits post-imputación evap: sin violaciones
+2026-05-24 19:46:34,346  INFO      [OK]      physical_limits post-imputación tmax: sin violaciones
+2026-05-24 19:46:34,355  INFO      [OK]      physical_limits post-imputación tmin: sin violaciones
+2026-05-24 19:46:34,385  INFO      [OK]      tmax_gte_tmin post-imputación: sin inversiones
+2026-05-24 19:46:34,388  INFO      ----------------------------------------
+2026-05-24 19:46:34,388  INFO      KPSS post-imputación (WARNING)
+2026-05-24 19:46:34,389  INFO      ----------------------------------------
+2026-05-24 19:46:34,554  INFO        [OK     ] KPSS post-imputación precip: 158/173 estacionarias (91.3%)
+2026-05-24 19:46:34,737  INFO        [WARNING] KPSS post-imputación evap: 107/173 estacionarias (61.8%)
+2026-05-24 19:46:34,887  INFO        [WARNING] KPSS post-imputación tmax: 93/173 estacionarias (53.8%)
+2026-05-24 19:46:35,044  INFO        [OK     ] KPSS post-imputación tmin: 143/173 estacionarias (82.7%)
+2026-05-24 19:46:35,055  INFO      ============================================================
+2026-05-24 19:46:35,055  INFO      VALIDACIÓN SUPERADA — dataset imputado estadísticamente válido.
+2026-05-24 19:46:35,055  INFO      Reportes en: reports/validacion_estadistica
+2026-05-24 19:46:35,055  INFO      ============================================================

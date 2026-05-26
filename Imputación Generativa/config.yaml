@@ -1,0 +1,106 @@
+# ============================================================
+# Imputación Generativa — RES-34 (subtareas RES-128, RES-129, RES-130)
+# Configuración de la función de imputación con BiGRU-opt.
+#
+# Todas las rutas son relativas a la raíz del proyecto.
+# ============================================================
+
+# ------ Entrada ---------------------------------------------
+input:
+  dataset: "data/processed/dataset_final.parquet"
+
+# ------ Selección del modelo ganador -------------------------
+# El script lee seleccion_ejecutiva.csv para confirmar el ganador
+# y carga el checkpoint correspondiente. Si el CSV no existe,
+# se usa el modelo por defecto definido en model.default.
+selection:
+  report: "reports/optimizacion/seleccion_ejecutiva.csv"
+  # Mapa nombre_modelo → ruta del checkpoint (relativo a raíz)
+  model_paths:
+    BIGRU-OPT:    "models/optimizacion/bigru_opt.pt"
+    BRITS-OPT:    "models/optimizacion/brits_opt.pt"
+    SAITS-OPT:    "models/optimizacion/saits_opt.pt"
+    XGBOOST-OPT:  "models/optimizacion/xgboost_opt.pkl"
+
+# ------ Modelo por defecto (si seleccion_ejecutiva.csv no existe) ---
+model:
+  default: "BIGRU-OPT"
+  path: "models/optimizacion/bigru_opt.pt"
+
+  # Arquitectura BiGRUImputer — valores de respaldo si el checkpoint
+  # no incluye la clave 'config'. Se leen del checkpoint en primer lugar.
+  n_features: 4
+  hidden_size: 128
+  n_layers: 2
+  dropout: 0.103   # valor óptimo encontrado por Optuna TPE (50 trials)
+
+# ------ Scalers ---------------------------------------------
+scalers:
+  dir: "models/scalers"
+  # Nombre del archivo por variable (sin extensión .pkl)
+  files:
+    precip: "scaler_precip"
+    evap:   "scaler_evap"
+    tmax:   "scaler_tmax"
+    tmin:   "scaler_tmin"
+
+# ------ Variables procesadas --------------------------------
+variables: [precip, evap, tmax, tmin]
+
+# ------ Columnas del DataFrame de entrada -------------------
+columns:
+  station: "estacion"
+  date:    "date"
+
+# ------ Ventanas deslizantes --------------------------------
+# Deben coincidir con los parámetros usados en tensor_builder.py
+sequence:
+  window_size: 30   # días por ventana
+  stride:      7    # paso entre ventanas
+  max_gap_days: 365 # brecha máxima permitida dentro de una ventana
+
+# ------ Inferencia ------------------------------------------
+inference:
+  batch_size: 512   # secuencias por batch durante la inferencia
+  device: "auto"    # "auto" → usa CUDA si está disponible, si no CPU
+
+# ------ Salidas ---------------------------------------------
+output:
+  # Directorio donde se guarda el dataset imputado
+  dir: "data/imputed"
+  parquet: "data/imputed/dataset_imputado.parquet"
+  # CSV para usuarios finales → generado por Etapa 12 (Análisis y Exportación)
+
+  # Reporte de imputación: cuántos NaN fueron rellenados por variable/estación
+  report: "reports/imputacion/imputacion_report.csv"
+
+  # Log de ejecución
+  log_dir: "data/imputed/_logs"
+  log_file: "imputation_run.log"
+
+# ------ Post-procesamiento físico ---------------------------
+# Límites físicos aplicados después de la transformación inversa.
+# Tomados de Validacion y limpieza/config.yaml para consistencia.
+# Garantizan que los valores imputados son hidrometeorológicamente válidos.
+physical_limits:
+  precip:
+    min: 0.0
+    max: 500.0
+  evap:
+    min: 0.0
+    max: 60.0
+  tmax:
+    min: -5.0
+    max: 55.0
+  tmin:
+    min: -15.0
+    max: 45.0
+
+# Restricción lógica: temperatura máxima siempre >= temperatura mínima.
+# Cuando ambas son NaN y se imputan, se corrige si la predicción invierte el orden.
+constraints:
+  tmax_gte_tmin: true
+
+# ------ Reproducibilidad ------------------------------------
+reproducibility:
+  random_seed: 42

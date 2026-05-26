@@ -1,0 +1,36 @@
+# =============================================================
+# Configuración del descargador CONAGUA-SMN
+# =============================================================
+
+estado: "sin"   # Clave de estado en minúsculas (ej. sin, jal, son)
+
+url:
+  base: "https://smn.conagua.gob.mx/tools/RESOURCES/Normales_Climatologicas/Diarios/{estado}/dia{clave}.txt"
+  user_agent: "CONAGUA-Downloader/2.0"
+
+estaciones:
+  rango_inicio: 25001   # Primera clave a explorar (Sinaloa: 25001)
+  rango_fin:    25300   # Última clave a explorar
+
+conexion:
+  timeout_seg:          25    # Segundos de espera por request
+  reintentos_por_pase:  3     # Intentos antes de marcar FAIL
+  pausa_entre_claves:   0.2   # Segundos entre requests dentro de cada hilo
+  max_workers:          10    # Hilos paralelos (no subir de 20)
+  max_html_preview:     200   # Caracteres del preview en errores HTML
+
+rutas:
+  data_root:  "data/raw/conagua_smn"   # relativo al project root
+  fuente:     "fuente=normales_climatologicas"
+  producto:   "producto=diarios_txt"
+  logs:       "_logs"
+  meta:       "_meta"
+  archivos:
+    manifest:      "download_manifest.csv"
+    runlog:        "download_run.log"
+    summary:       "download_summary.csv"
+    stations_meta: "stations_{estado}.csv"   # {estado} se reemplaza en tiempo de ejecución
+
+conexion_avanzada:
+  content_sample_bytes: 2000   # bytes iniciales a inspeccionar para detectar respuestas HTML
+  backoff_base:         2.0    # segundos base para el backoff entre reintentos (base * intento)

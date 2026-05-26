@@ -1,0 +1,2 @@
+modelo_ganador,score_total,subcampeon,score_subcampeon,gap_score,nse_ganador,rmse_ganador,n_modelos_evaluados,fase,metodo_seleccion
+BiGRU-opt,0.8014,XGBoost-opt,0.8173,0.0159,0.6205,0.1859,17,US 4.3.3,desempate tmax/tmin
