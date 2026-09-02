@@ -723,27 +723,6 @@ Se enmascaran artificialmente el 20 % de los valores observados en el split de t
 
 ---
 
-## Documentación técnica
-
-La metodología completa, fundamentos teóricos, decisiones de diseño y análisis de resultados están documentados en la tesis de residencias profesionales asociada a este proyecto (TECNM Campus Culiacán, 2026).
-
-Ver también: [DATA_DICTIONARY.md](reports/documentacion/DATA_DICTIONARY.md) - diccionario de datos completo de todas las variables y artefactos.
-
----
-
-## Cómo citar
-
-Si usas este código o dataset en tu investigación:
-
-```
-García Pérez, J. A., & Verdugo Bermúdez, S. (2026). Reconstrucción de base de datos
-hidrometeorológica con imputación generativa BiGRU: pipeline CRISP-ML(Q) para la red
-de estaciones climatológicas de Sinaloa, México. Proyecto de Residencias Profesionales,
-TECNM Campus Culiacán — Laboratorio de Geomática y Teledetección.
-https://github.com/Josegas/Residencias_Imputacion_Generativa_Hidrometeorologica
-```
-
----
 
 ## Licencia
 
